@@ -1,0 +1,21 @@
+/* app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  /* Win-Toju Corporate Palette */
+  --color-corporate-navy: #0A192F;
+  --color-corporate-slate: #475569;
+  --color-corporate-red: #C50000;
+  --color-corporate-cream: #F8F9FA;
+
+  /* Typography Configuration */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Force all headings to use the Montserrat font */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
+}
