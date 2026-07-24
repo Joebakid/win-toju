@@ -3,6 +3,7 @@
 
 import { useState, useRef, useEffect, ChangeEvent, FormEvent } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Loader from "../ui/Loader";
 
 export default function Contact() {
@@ -18,6 +19,7 @@ export default function Contact() {
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   // GSAP Refs
+  const sectionRef = useRef<HTMLElement>(null);
   const formContainerRef = useRef<HTMLDivElement>(null);
   const successMessageRef = useRef<HTMLDivElement>(null);
 
@@ -26,6 +28,47 @@ export default function Contact() {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  // GSAP Scroll Animation
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Animate left column details
+      gsap.fromTo(".contact-anim",
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          }
+        }
+      );
+
+      // 2. Animate the right column form wrapper
+      gsap.fromTo(".contact-form-anim",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          delay: 0.3, // Let the text start revealing first
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          }
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   // Handle Form Submission with Web3Forms
   const handleSubmit = async (e: FormEvent) => {
@@ -51,7 +94,7 @@ export default function Contact() {
       const result = await response.json();
 
       if (response.ok && result.success) {
-        // 1. GSAP Animation: Fade out the form
+        // Form Fade Out Animation on Success
         gsap.to(formContainerRef.current, {
           opacity: 0,
           y: 20,
@@ -71,7 +114,7 @@ export default function Contact() {
     }
   };
 
-  // 2. GSAP Animation: Fade in the success message when status changes to 'success'
+  // Success Message Fade In Animation
   useEffect(() => {
     if (status === "success" && successMessageRef.current) {
       gsap.fromTo(
@@ -83,25 +126,25 @@ export default function Contact() {
   }, [status]);
 
   return (
-    <section id="contact" className="py-24 bg-white border-t border-gray-100">
+    <section id="contact" ref={sectionRef} className="py-24 bg-white border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           
           {/* Left Column: Contact Details & Map */}
           <div className="space-y-8">
-            <div className="inline-block border-l-4 border-corporate-red pl-4">
+            <div className="contact-anim opacity-0 inline-block border-l-4 border-corporate-red pl-4">
               <h2 className="text-corporate-red font-bold tracking-widest uppercase text-sm">
                 Get In Touch
               </h2>
             </div>
-            <h3 className="text-4xl md:text-5xl font-black text-corporate-navy tracking-tight">
+            <h3 className="contact-anim opacity-0 text-4xl md:text-5xl font-black text-corporate-navy tracking-tight">
               Let's Build the Future Together.
             </h3>
             
             <div className="space-y-6 text-corporate-slate">
               {/* Headquarters Address */}
-              <div className="flex items-start gap-4">
+              <div className="contact-anim opacity-0 flex items-start gap-4">
                 <div className="mt-1 text-corporate-red">
                   <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 </div>
@@ -116,7 +159,7 @@ export default function Contact() {
               </div>
 
               {/* Clickable Email Addresses */}
-              <div className="flex items-start gap-4">
+              <div className="contact-anim opacity-0 flex items-start gap-4">
                 <div className="mt-1 text-corporate-red">
                   <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                 </div>
@@ -134,7 +177,7 @@ export default function Contact() {
               </div>
 
               {/* Clickable Phone Numbers */}
-              <div className="flex items-start gap-4">
+              <div className="contact-anim opacity-0 flex items-start gap-4">
                 <div className="mt-1 text-corporate-red">
                   <svg className="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
                 </div>
@@ -153,7 +196,7 @@ export default function Contact() {
             </div>
 
             {/* Live Google Map with Custom Loader */}
-            <div className="w-full h-72 bg-gray-200 rounded-lg border border-gray-300 overflow-hidden relative shadow-inner">
+            <div className="contact-anim opacity-0 w-full h-72 bg-gray-200 rounded-lg border border-gray-300 overflow-hidden relative shadow-inner">
               {!isMapLoaded && (
                 <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-100">
                   <Loader text="Loading Map..." />
@@ -175,7 +218,7 @@ export default function Contact() {
           </div>
 
           {/* Right Column: Routing Form */}
-          <div className="bg-corporate-cream p-8 md:p-12 rounded-lg border-t-4 border-corporate-navy shadow-lg relative min-h-[500px]">
+          <div className="contact-form-anim opacity-0 bg-corporate-cream p-8 md:p-12 rounded-lg border-t-4 border-corporate-navy shadow-lg relative min-h-[500px]">
             
             {/* GSAP Success Message overlay */}
             {status === "success" && (
@@ -226,7 +269,7 @@ export default function Contact() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded border border-gray-300 focus:border-corporate-red focus:ring-1 focus:ring-corporate-red outline-none transition" 
+                        className="w-full px-4 py-3 rounded border border-gray-300 focus:border-corporate-red focus:ring-1 focus:ring-corporate-red outline-none transition bg-white text-corporate-navy" 
                         placeholder="John Doe" 
                       />
                     </div>
@@ -239,7 +282,7 @@ export default function Contact() {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 rounded border border-gray-300 focus:border-corporate-red focus:ring-1 focus:ring-corporate-red outline-none transition" 
+                        className="w-full px-4 py-3 rounded border border-gray-300 focus:border-corporate-red focus:ring-1 focus:ring-corporate-red outline-none transition bg-white text-corporate-navy" 
                         placeholder="john@company.com" 
                       />
                     </div>
@@ -252,7 +295,7 @@ export default function Contact() {
                       name="department"
                       value={formData.department}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 rounded border border-gray-300 focus:border-corporate-red focus:ring-1 focus:ring-corporate-red outline-none transition bg-white text-corporate-slate"
+                      className="w-full px-4 py-3 rounded border border-gray-300 focus:border-corporate-red focus:ring-1 focus:ring-corporate-red outline-none transition bg-white text-corporate-navy"
                     >
                       <option value="general">General Inquiry</option>
                       <option value="procurement">Procurement & Logistics</option>
@@ -274,7 +317,7 @@ export default function Contact() {
                       value={formData.message}
                       onChange={handleChange}
                       rows={4} 
-                      className="w-full px-4 py-3 rounded border border-gray-300 focus:border-corporate-red focus:ring-1 focus:ring-corporate-red outline-none transition resize-none" 
+                      className="w-full px-4 py-3 rounded border border-gray-300 focus:border-corporate-red focus:ring-1 focus:ring-corporate-red outline-none transition resize-none bg-white text-corporate-navy" 
                       placeholder="How can we assist you?"
                     ></textarea>
                   </div>

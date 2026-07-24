@@ -1,4 +1,7 @@
 // app/components/layout/Footer.tsx
+"use client";
+
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { 
   FaMapMarkerAlt, 
@@ -8,8 +11,12 @@ import {
   FaExternalLinkAlt 
 } from "react-icons/fa";
 import Logo from "../ui/Logo";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Footer() {
+  const footerRef = useRef<HTMLElement>(null);
+
   const officialDocuments = [
     { name: "CAC Certificate", href: "https://drive.google.com/file/d/1kC2HkRGQ02N3T8KVWJwFjisT1pcgE0SJ/preview" },
     { name: "Tax Clearance (TCC)", href: "https://drive.google.com/file/d/1irixM_NIfXIRtMk74N9DnGUVQeOs5NTQ/preview" },
@@ -21,14 +28,42 @@ export default function Footer() {
     { name: "Personnel Credentials", href: "https://docs.google.com/document/d/1-cU7fGAqinl6Smokt1Hq5VEC1CWIf8Bc/preview" },
   ];
 
+  // GSAP ScrollTrigger Animation
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // Use fromTo to strictly define the start and end states, preventing flashes
+      gsap.fromTo(".footer-anim", 
+        { 
+          y: 30, 
+          opacity: 0 
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 90%", // Triggers when the top of the footer hits 90% of the viewport height
+          }
+        }
+      );
+    }, footerRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <footer className="bg-corporate-navy pt-20 pb-10 border-t-4 border-corporate-red">
+    <footer ref={footerRef} className="bg-corporate-navy pt-20 pb-10 border-t-4 border-corporate-red overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
           {/* Column 1: Brand & Contact */}
-          <div className="space-y-6">
+          <div className="footer-anim opacity-0 space-y-6">
             <div className="w-48 bg-white p-2 rounded">
               <Logo className="w-full" />
             </div>
@@ -56,7 +91,7 @@ export default function Footer() {
           </div>
 
           {/* Column 2: Quick Links */}
-          <div>
+          <div className="footer-anim opacity-0">
             <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-6 border-b border-slate-700 pb-2">
               Quick Links
             </h4>
@@ -71,7 +106,7 @@ export default function Footer() {
           </div>
 
           {/* Column 3: Policies & Legal */}
-          <div>
+          <div className="footer-anim opacity-0">
             <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-6 border-b border-slate-700 pb-2">
               Legal & Policies
             </h4>
@@ -85,7 +120,7 @@ export default function Footer() {
           </div>
 
           {/* Column 4: Official Documents */}
-          <div>
+          <div className="footer-anim opacity-0">
             <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-6 border-b border-slate-700 pb-2">
               Official Documents
             </h4>
@@ -110,7 +145,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright Bar */}
-        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
+        <div className="footer-anim opacity-0 border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-500">
           <p>&copy; {new Date().getFullYear()} Win-Toju System Enterprise Limited (RC: 1744024). All Rights Reserved.</p>
           <p>Designed for Industrial Excellence.</p>
         </div>
