@@ -131,44 +131,44 @@ export default function Certifications() {
         </div>
       </div>
 
-      {/* Document Viewer Modal */}
+      {/* Document Viewer Modal - COMPLETELY REDESIGNED */}
       {activeDoc && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-corporate-navy/90 backdrop-blur-sm p-4 md:p-10">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8">
           
-          <div className="relative w-full max-w-5xl h-full bg-white rounded-lg shadow-2xl flex flex-col overflow-hidden animate-in fade-in zoom-in duration-300">
+          {/* 1. Clickable Backdrop */}
+          <div 
+            className="absolute inset-0 bg-corporate-navy/95 backdrop-blur-md cursor-pointer"
+            onClick={() => setActiveDoc(null)}
+          ></div>
+          
+          {/* 2. Floating Close Button (Outside the document container) */}
+          <button 
+            onClick={() => setActiveDoc(null)}
+            className="absolute top-6 right-6 md:top-10 md:right-10 z-[10000] bg-corporate-red hover:bg-red-700 text-white p-3 md:p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center"
+            aria-label="Close document"
+          >
+            <FaTimes className="w-6 h-6 md:w-8 md:h-8" />
+          </button>
+
+          {/* 3. Pure Iframe Container with Loader */}
+          <div className="relative z-10 w-full max-w-5xl h-[85vh] bg-gray-200 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300 ring-4 ring-white/10 mt-12 md:mt-0">
             
-            {/* Modal Header */}
-            <div className="flex justify-between items-center bg-gray-100 p-4 border-b border-gray-300">
-              <h4 className="font-bold text-corporate-navy">Document Viewer</h4>
-              <button 
-                onClick={() => setActiveDoc(null)}
-                className="bg-corporate-red hover:bg-red-800 text-white p-2 rounded transition-colors cursor-pointer"
-                aria-label="Close document"
-              >
-                <FaTimes className="w-5 h-5" />
-              </button>
-            </div>
+            {/* Show loader while iframe is loading */}
+            {!isIframeLoaded && (
+              <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-100">
+                <Loader text="Loading Document..." />
+              </div>
+            )}
 
-            {/* Iframe displaying the Google Drive /preview link with Loader */}
-            <div className="flex-grow w-full bg-gray-200 relative">
-              
-              {/* Show loader while iframe is loading */}
-              {!isIframeLoaded && (
-                <div className="absolute inset-0 z-10 flex items-center justify-center bg-gray-100">
-                  <Loader text="Loading Document..." />
-                </div>
-              )}
-
-              <iframe 
-                src={activeDoc} 
-                className={`absolute inset-0 w-full h-full border-none transition-opacity duration-500 ${isIframeLoaded ? 'opacity-100' : 'opacity-0'}`} 
-                title="Document Viewer"
-                allow="autoplay"
-                onLoad={() => setIsIframeLoaded(true)}
-              ></iframe>
-            </div>
-
+            <iframe 
+              src={activeDoc} 
+              className={`absolute inset-0 w-full h-full border-none transition-opacity duration-500 ${isIframeLoaded ? 'opacity-100' : 'opacity-0'}`} 
+              title="Document Viewer"
+              allow="autoplay"
+              onLoad={() => setIsIframeLoaded(true)}
+            ></iframe>
           </div>
+
         </div>
       )}
     </section>
