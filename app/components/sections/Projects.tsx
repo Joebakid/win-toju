@@ -1,7 +1,7 @@
 // app/components/sections/Projects.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, ReactNode } from "react";
 import { FaIndustry, FaShip, FaRecycle, FaTimes } from "react-icons/fa";
 
 // Define the Project Type
@@ -10,7 +10,7 @@ type Project = {
   title: string;
   client: string;
   category: string;
-  icon: JSX.Element;
+  icon: ReactNode; // <-- Updated from JSX.Element to ReactNode to fix Vercel build
   description: string;
   fullDescription: string;
   image: string;
