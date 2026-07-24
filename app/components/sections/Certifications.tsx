@@ -24,7 +24,6 @@ export default function Certifications() {
   useEffect(() => {
     if (activeDoc) {
       document.body.style.overflow = "hidden";
-      // Reset iframe loading state when a new document is opened
       setIsIframeLoaded(false); 
     } else {
       document.body.style.overflow = "";
@@ -86,6 +85,10 @@ export default function Certifications() {
     },
   ];
 
+  const handleClose = () => {
+    setActiveDoc(null);
+  };
+
   return (
     <section id="certifications" className="py-24 bg-corporate-cream relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
@@ -131,42 +134,40 @@ export default function Certifications() {
         </div>
       </div>
 
-      {/* Document Viewer Modal - REDESIGNED FOR MAX CLICKABLE SPACE */}
+      {/* MOBILE-PROOF DOCUMENT VIEWER */}
       {activeDoc && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+        <div className="fixed inset-0 z-[9999] bg-corporate-navy/95 backdrop-blur-md flex flex-col">
           
-          {/* 1. Clickable Backdrop (Fills 100% of screen) */}
-          <div 
-            className="absolute inset-0 bg-corporate-navy/95 backdrop-blur-md cursor-pointer"
-            onClick={() => setActiveDoc(null)}
-          ></div>
-          
-          {/* 2. Floating Close Button (Fixed to the top-right corner of the SCREEN) */}
-          <button 
-            onClick={() => setActiveDoc(null)}
-            className="absolute top-4 right-4 md:top-8 md:right-8 z-[10000] bg-corporate-red hover:bg-red-700 text-white p-3 md:p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center cursor-pointer"
-            aria-label="Close document"
-          >
-            <FaTimes className="w-5 h-5 md:w-6 md:h-6" />
-          </button>
+          {/* Top Bar - Dedicated safe space for the close button */}
+          <div className="flex justify-end items-center p-4 md:p-6 flex-shrink-0 w-full max-w-6xl mx-auto">
+            <button 
+              onClick={handleClose}
+              className="bg-corporate-red hover:bg-red-700 text-white p-3 md:p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center cursor-pointer z-[10000]"
+              aria-label="Close document"
+            >
+              <FaTimes className="w-6 h-6" />
+            </button>
+          </div>
 
-          {/* 3. Pure Iframe Container (Strictly 80% of screen size to guarantee empty space) */}
-          <div className="relative z-10 w-[90vw] md:w-[80vw] h-[80vh] max-w-6xl bg-gray-200 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300 ring-4 ring-white/10">
-            
-            {/* Show loader while iframe is loading */}
-            {!isIframeLoaded && (
-              <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-100">
-                <Loader text="Loading Document..." />
-              </div>
-            )}
+          {/* Document Container - Placed below the button so they never overlap */}
+          <div className="flex-grow w-full max-w-6xl mx-auto px-4 pb-6 md:px-6 md:pb-8 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-full bg-gray-200 rounded-xl overflow-hidden shadow-2xl ring-4 ring-white/10">
+              
+              {/* Loader */}
+              {!isIframeLoaded && (
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-100">
+                  <Loader text="Loading Document..." />
+                </div>
+              )}
 
-            <iframe 
-              src={activeDoc} 
-              className={`absolute inset-0 w-full h-full border-none transition-opacity duration-500 ${isIframeLoaded ? 'opacity-100' : 'opacity-0'}`} 
-              title="Document Viewer"
-              allow="autoplay"
-              onLoad={() => setIsIframeLoaded(true)}
-            ></iframe>
+              <iframe 
+                src={activeDoc} 
+                className={`absolute inset-0 w-full h-full border-none transition-opacity duration-500 ${isIframeLoaded ? 'opacity-100' : 'opacity-0'}`} 
+                title="Document Viewer"
+                allow="autoplay"
+                onLoad={() => setIsIframeLoaded(true)}
+              ></iframe>
+            </div>
           </div>
 
         </div>

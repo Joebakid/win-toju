@@ -3,9 +3,11 @@
 
 import { useState, useEffect } from "react";
 import { FaEye, FaTimes } from "react-icons/fa";
+import Loader from "../ui/Loader";
 
 export default function Hero() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isIframeLoaded, setIsIframeLoaded] = useState(false);
   
   // Using the Specialized DPR Permit as the primary trust signal
   const activeDoc = "https://drive.google.com/file/d/1mw7YiTEVxucd648_UQ8HUXdpFhX-xWdm/preview";
@@ -14,6 +16,7 @@ export default function Hero() {
   useEffect(() => {
     if (isModalOpen) {
       document.body.style.overflow = "hidden";
+      setIsIframeLoaded(false); // Reset loader state when opened
     } else {
       document.body.style.overflow = "";
     }
@@ -64,33 +67,40 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Document Viewer Modal - COMPLETELY REDESIGNED */}
+      {/* MOBILE-PROOF DOCUMENT VIEWER */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8">
+        <div className="fixed inset-0 z-[9999] bg-corporate-navy/95 backdrop-blur-md flex flex-col">
           
-          {/* 1. Clickable Backdrop */}
-          <div 
-            className="absolute inset-0 bg-corporate-navy/95 backdrop-blur-md cursor-pointer"
-            onClick={() => setIsModalOpen(false)}
-          ></div>
-          
-          {/* 2. Floating Close Button (Outside the document container) */}
-          <button 
-            onClick={() => setIsModalOpen(false)}
-            className="absolute top-6 right-6 md:top-10 md:right-10 z-[10000] bg-corporate-red hover:bg-red-700 text-white p-3 md:p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center"
-            aria-label="Close document"
-          >
-            <FaTimes className="w-6 h-6 md:w-8 md:h-8" />
-          </button>
-          
-          {/* 3. Pure Iframe Container */}
-          <div className="relative z-10 w-full max-w-5xl h-[85vh] bg-gray-200 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300 ring-4 ring-white/10 mt-12 md:mt-0">
-            <iframe 
-              src={activeDoc} 
-              className="w-full h-full border-none" 
-              title="Document Viewer"
-              allow="autoplay"
-            ></iframe>
+          {/* Top Bar - Dedicated safe space for the close button */}
+          <div className="flex justify-end items-center p-4 md:p-6 flex-shrink-0 w-full max-w-6xl mx-auto">
+            <button 
+              onClick={() => setIsModalOpen(false)}
+              className="bg-corporate-red hover:bg-red-700 text-white p-3 md:p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center cursor-pointer z-[10000]"
+              aria-label="Close document"
+            >
+              <FaTimes className="w-6 h-6" />
+            </button>
+          </div>
+
+          {/* Document Container - Placed below the button so they never overlap */}
+          <div className="flex-grow w-full max-w-6xl mx-auto px-4 pb-6 md:px-6 md:pb-8 flex items-center justify-center overflow-hidden">
+            <div className="relative w-full h-full bg-gray-200 rounded-xl overflow-hidden shadow-2xl ring-4 ring-white/10">
+              
+              {/* Loader */}
+              {!isIframeLoaded && (
+                <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-100">
+                  <Loader text="Loading Document..." />
+                </div>
+              )}
+
+              <iframe 
+                src={activeDoc} 
+                className={`absolute inset-0 w-full h-full border-none transition-opacity duration-500 ${isIframeLoaded ? 'opacity-100' : 'opacity-0'}`} 
+                title="Document Viewer"
+                allow="autoplay"
+                onLoad={() => setIsIframeLoaded(true)}
+              ></iframe>
+            </div>
           </div>
 
         </div>
