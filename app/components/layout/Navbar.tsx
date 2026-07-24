@@ -23,13 +23,20 @@ export default function Navbar() {
   // GSAP Animation Effect
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".nav-anim", {
-        y: -20,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power3.out",
-      });
+      // Use fromTo to strictly define the start and end states, preventing flashes
+      gsap.fromTo(".nav-anim", 
+        { 
+          y: -20, 
+          opacity: 0 
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+        }
+      );
     }, headerRef);
 
     return () => ctx.revert();
@@ -40,7 +47,8 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex justify-between items-center h-20">
           
-          <Link href="/" className="nav-anim w-32 md:w-40 flex-shrink-0 flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
+          {/* ADDED: opacity-0 to hide elements before JS loads */}
+          <Link href="/" className="nav-anim opacity-0 w-32 md:w-40 flex-shrink-0 flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
             <Logo />
           </Link>
 
@@ -49,22 +57,24 @@ export default function Navbar() {
               <Link 
                 key={link.name} 
                 href={link.href} 
-                className="nav-anim text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs lg:text-sm uppercase tracking-wide"
+                // ADDED: opacity-0
+                className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs lg:text-sm uppercase tracking-wide"
               >
                 {link.name}
               </Link>
             ))}
             
-            {/* FIX: Changed `transition` to `transition-colors` so it doesn't fight GSAP */}
+            {/* ADDED: opacity-0 */}
             <Link 
               href="/#contact" 
-              className="nav-anim bg-corporate-navy hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide whitespace-nowrap"
+              className="nav-anim opacity-0 bg-corporate-navy hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide whitespace-nowrap"
             >
               Contact Us
             </Link>
           </nav>
 
-          <div className="nav-anim md:hidden flex items-center">
+          {/* ADDED: opacity-0 */}
+          <div className="nav-anim opacity-0 md:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-corporate-navy hover:text-corporate-red focus:outline-none"

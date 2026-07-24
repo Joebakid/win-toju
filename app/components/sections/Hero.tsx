@@ -18,19 +18,25 @@ export default function Hero() {
 
   // GSAP Animation Effect
   useEffect(() => {
-    // gsap.context ensures animations are scoped to this component and cleaned up on unmount
     const ctx = gsap.context(() => {
-      gsap.from(".hero-anim", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out",
-        delay: 0.2 // Slight delay to ensure the page has loaded visually
-      });
+      // Use fromTo to strictly define the start and end states, preventing flashes
+      gsap.fromTo(".hero-anim", 
+        { 
+          y: 40, 
+          opacity: 0 
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: "power3.out",
+          delay: 0.2 // Slight delay to ensure the page has loaded visually
+        }
+      );
     }, heroRef);
 
-    return () => ctx.revert(); // Cleanup function for React Strict Mode
+    return () => ctx.revert();
   }, []);
 
   // Prevent background scrolling when the modal is active
@@ -54,22 +60,22 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full mt-10 lg:mt-0">
         <div className="max-w-3xl space-y-6 md:space-y-8">
           
-          {/* Added .hero-anim class to stagger elements */}
-          <div className="hero-anim inline-block border-l-4 border-corporate-red pl-3 md:pl-4">
+          {/* ADDED: opacity-0 to hide elements before JS loads */}
+          <div className="hero-anim opacity-0 inline-block border-l-4 border-corporate-red pl-3 md:pl-4">
             <h2 className="text-corporate-cream font-semibold tracking-widest uppercase text-xs md:text-sm">
               Marine Logistics & General Contracting
             </h2>
           </div>
           
-          <h1 className="hero-anim text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-tight">
+          <h1 className="hero-anim opacity-0 text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-tight">
             Uncompromising Standards in <span className="text-corporate-red block sm:inline">Industrial Execution.</span>
           </h1>
           
-          <p className="hero-anim text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
+          <p className="hero-anim opacity-0 text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
             As a fully certified indigenous enterprise, we deliver expert marine logistics, special transportation, claims agency, and comprehensive labour supply, alongside certified onshore waste management for the Nigerian energy sector.
           </p>
           
-          <div className="hero-anim flex flex-col sm:flex-row flex-wrap gap-4 pt-4 md:pt-6">
+          <div className="hero-anim opacity-0 flex flex-col sm:flex-row flex-wrap gap-4 pt-4 md:pt-6">
             <a 
               href="#contact" 
               className="w-full sm:w-auto bg-corporate-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded transition duration-300 shadow-lg text-center"
