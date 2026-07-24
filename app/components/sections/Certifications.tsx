@@ -1,7 +1,6 @@
 // app/components/sections/Certifications.tsx
 "use client";
 
-import { useState, useEffect } from "react";
 import { 
   FaBuilding, 
   FaFileInvoiceDollar, 
@@ -11,29 +10,10 @@ import {
   FaBriefcaseMedical, 
   FaFileContract, 
   FaIdBadge,
-  FaTimes,
   FaExternalLinkAlt
 } from "react-icons/fa";
-import Loader from "../ui/Loader";
 
 export default function Certifications() {
-  const [activeDoc, setActiveDoc] = useState<string | null>(null);
-  const [isIframeLoaded, setIsIframeLoaded] = useState(false);
-
-  // Prevent background scrolling when the modal is active
-  useEffect(() => {
-    if (activeDoc) {
-      document.body.style.overflow = "hidden";
-      setIsIframeLoaded(false); 
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [activeDoc]);
-
   const documents = [
     { 
       name: "CAC Certificate of Incorporation", 
@@ -85,10 +65,6 @@ export default function Certifications() {
     },
   ];
 
-  const handleClose = () => {
-    setActiveDoc(null);
-  };
-
   return (
     <section id="certifications" className="py-24 bg-corporate-cream relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
@@ -121,57 +97,21 @@ export default function Certifications() {
                   <p className="text-xs text-corporate-slate mb-4">{doc.type}</p>
                 </div>
                 
-                <button 
-                  onClick={() => setActiveDoc(doc.href)}
-                  className="text-corporate-red text-xs font-bold uppercase tracking-wider hover:text-red-800 transition-colors flex items-center gap-1 w-fit cursor-pointer"
+                {/* Replaced Button with a standard <a> tag opening in a new tab */}
+                <a 
+                  href={doc.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-corporate-red text-xs font-bold uppercase tracking-wider hover:text-red-800 transition-colors flex items-center gap-1 w-fit"
                 >
                   View Document 
                   <FaExternalLinkAlt className="w-3 h-3 ml-1" />
-                </button>
+                </a>
               </div>
             </div>
           ))}
         </div>
       </div>
-
-      {/* MOBILE-PROOF DOCUMENT VIEWER */}
-      {activeDoc && (
-        <div className="fixed inset-0 z-[9999] bg-corporate-navy/95 backdrop-blur-md flex flex-col">
-          
-          {/* Top Bar - Dedicated safe space for the close button */}
-          <div className="flex justify-end items-center p-4 md:p-6 flex-shrink-0 w-full max-w-6xl mx-auto">
-            <button 
-              onClick={handleClose}
-              className="bg-corporate-red hover:bg-red-700 text-white p-3 md:p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center cursor-pointer z-[10000]"
-              aria-label="Close document"
-            >
-              <FaTimes className="w-6 h-6" />
-            </button>
-          </div>
-
-          {/* Document Container - Placed below the button so they never overlap */}
-          <div className="flex-grow w-full max-w-6xl mx-auto px-4 pb-6 md:px-6 md:pb-8 flex items-center justify-center overflow-hidden">
-            <div className="relative w-full h-full bg-gray-200 rounded-xl overflow-hidden shadow-2xl ring-4 ring-white/10">
-              
-              {/* Loader */}
-              {!isIframeLoaded && (
-                <div className="absolute inset-0 z-20 flex items-center justify-center bg-gray-100">
-                  <Loader text="Loading Document..." />
-                </div>
-              )}
-
-              <iframe 
-                src={activeDoc} 
-                className={`absolute inset-0 w-full h-full border-none transition-opacity duration-500 ${isIframeLoaded ? 'opacity-100' : 'opacity-0'}`} 
-                title="Document Viewer"
-                allow="autoplay"
-                onLoad={() => setIsIframeLoaded(true)}
-              ></iframe>
-            </div>
-          </div>
-
-        </div>
-      )}
     </section>
   );
 }

@@ -9,12 +9,12 @@ import HSE from "./components/sections/HSE";
 import Certifications from "./components/sections/Certifications";
 import Contact from "./components/sections/Contact";
 import Footer from "./components/layout/Footer";
-import PageLoader from "./components/ui/PageLoader"; // <-- Import the loader
+// import PageLoader from "./components/ui/PageLoader"; 
 
 export default function Page() {
   return (
     <main className="min-h-screen bg-corporate-cream flex flex-col font-sans">
-      <PageLoader /> {/* <-- Add it right here */}
+      {/* <PageLoader />  */}
       <Navbar />
       <Hero />
       <About />
