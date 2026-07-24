@@ -20,7 +20,7 @@ export default function TermsPage() {
             
             <section className="space-y-3">
               <h2 className="text-xl font-bold text-corporate-navy">1. Introduction</h2>
-              <p>Welcome to Win-Toju System Enterprise Limited. By accessing our website or engaging our services, you agree to be bound by these Terms and Conditions. These terms govern your use of our marine logistics, engineering, waste management, and general contracting services.</p>
+              <p>Welcome to Win-Toju System Enterprise Limited. by accessing our website or engaging our services, you agree to be bound by these Terms and Conditions. These terms govern your use of our marine logistics, engineering, waste management, and general contracting services.</p>
             </section>
 
             <section className="space-y-3">
