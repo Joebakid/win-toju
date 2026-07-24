@@ -1,6 +1,8 @@
 // app/components/sections/Certifications.tsx
 "use client";
 
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { 
   FaBuilding, 
   FaFileInvoiceDollar, 
@@ -13,55 +15,74 @@ import {
   FaExternalLinkAlt
 } from "react-icons/fa";
 
+// Dynamically import the modal and disable SSR to prevent DOMMatrix errors
+const PDFModal = dynamic(() => import("../ui/PDFModal"), { ssr: false });
+
 export default function Certifications() {
+  const [activeDoc, setActiveDoc] = useState<string | null>(null);
+
+  // Prevent background scrolling when the modal is active
+  useEffect(() => {
+    if (activeDoc) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [activeDoc]);
+
+  // Updated to strictly match your local terminal file names
   const documents = [
     { 
       name: "CAC Certificate of Incorporation", 
       type: "PDF Document",
       icon: <FaBuilding className="w-6 h-6" />,
-      href: "https://drive.google.com/file/d/1kC2HkRGQ02N3T8KVWJwFjisT1pcgE0SJ/preview" 
+      href: "/documents/CERTIFICATE OF INCOPORATION.pdf" 
     },
     { 
       name: "Tax Clearance Certificate (TCC)", 
       type: "PDF Document",
       icon: <FaFileInvoiceDollar className="w-6 h-6" />,
-      href: "https://drive.google.com/file/d/1irixM_NIfXIRtMk74N9DnGUVQeOs5NTQ/preview" 
+      href: "/documents/TAX CLEARANCE 2026.pdf" 
     },
     { 
       name: "NUPRC Specialized Permit", 
       type: "PDF Document",
       icon: <FaFileSignature className="w-6 h-6" />,
-      href: "https://drive.google.com/file/d/1mw7YiTEVxucd648_UQ8HUXdpFhX-xWdm/preview" 
+      href: "/documents/SPECIALIZED DPR WIN-TOJU.pdf" 
     },
     { 
       name: "NIMASA Registration Licence", 
       type: "PDF Document",
       icon: <FaShip className="w-6 h-6" />,
-      href: "https://drive.google.com/file/d/1vJ2A-49AhGPLgWkrVtk67gU66Ze-SdjV/preview" 
+      href: "/documents/NIMASA 2025.pdf" 
     },
     { 
       name: "NCDMB Registration Certificate", 
       type: "PDF Document",
       icon: <FaAward className="w-6 h-6" />,
-      href: "https://drive.google.com/file/d/1fxkSGP5O79O5s-HwOieMqcT3bKie_9ic/preview" 
+      href: "/documents/NDCMB CERTIFICATE WINTOJU.pdf" 
     },
     { 
       name: "Clinic Retainer Agreement", 
       type: "PDF Document",
       icon: <FaBriefcaseMedical className="w-6 h-6" />,
-      href: "https://drive.google.com/file/d/1Ou0RtFANDBxrC4DSFwUYGjBWDphhbOGq/preview" 
+      href: "/documents/CLINIC RETAINERSHIP 2026.pdf" 
     },
     { 
       name: "Nigerian Content Policy Statement", 
       type: "PDF Document",
       icon: <FaFileContract className="w-6 h-6" />,
-      href: "https://drive.google.com/file/d/1L5jdCpy186Atu4Kf8Q42NGIzTE_WjF30/preview" 
+      href: "/documents/WINTOJU NIGERIAN  CONTENT POLICY STSTEMENT.pdf" 
     },
     { 
       name: "Key Personnel Credentials", 
-      type: "Word Document",
+      type: "PDF Document", 
       icon: <FaIdBadge className="w-6 h-6" />,
-      href: "https://docs.google.com/document/d/1-cU7fGAqinl6Smokt1Hq5VEC1CWIf8Bc/preview" 
+      // Note: Make sure you converted this file from .rtf to .pdf!
+      href: "/documents/COPIES OF CREDENTILAS OF KEY PERSONNELS.pdf" 
     },
   ];
 
@@ -97,21 +118,22 @@ export default function Certifications() {
                   <p className="text-xs text-corporate-slate mb-4">{doc.type}</p>
                 </div>
                 
-                {/* Replaced Button with a standard <a> tag opening in a new tab */}
-                <a 
-                  href={doc.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-corporate-red text-xs font-bold uppercase tracking-wider hover:text-red-800 transition-colors flex items-center gap-1 w-fit"
+                <button 
+                  onClick={() => setActiveDoc(doc.href)}
+                  className="text-corporate-red text-xs font-bold uppercase tracking-wider hover:text-red-800 transition-colors flex items-center gap-1 w-fit cursor-pointer"
                 >
                   View Document 
                   <FaExternalLinkAlt className="w-3 h-3 ml-1" />
-                </a>
+                </button>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Render the modal ONLY on the client */}
+      {activeDoc && <PDFModal activeDoc={activeDoc} onClose={() => setActiveDoc(null)} />}
+
     </section>
   );
 }

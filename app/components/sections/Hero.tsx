@@ -1,11 +1,31 @@
 // app/components/sections/Hero.tsx
 "use client";
 
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { FaEye } from "react-icons/fa";
 
+// Dynamically import the modal and disable SSR to prevent DOMMatrix errors
+const PDFModal = dynamic(() => import("../ui/PDFModal"), { ssr: false });
+
 export default function Hero() {
-  // Using the Specialized DPR Permit as the primary trust signal
-  const activeDoc = "https://drive.google.com/file/d/1mw7YiTEVxucd648_UQ8HUXdpFhX-xWdm/preview";
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Using the Specialized DPR Permit from the local public folder
+  const activeDoc = "/documents/SPECIALIZED DPR WIN-TOJU.pdf";
+
+  // Prevent background scrolling when the modal is active
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isModalOpen]);
 
   return (
     <section className="relative w-full min-h-[85vh] bg-corporate-navy flex items-center py-20 lg:py-0">
@@ -37,20 +57,26 @@ export default function Hero() {
               Request a Consultation
             </a>
             
-            {/* Replaced Button with a standard <a> tag opening in a new tab */}
-            <a 
-              href={activeDoc}
-              target="_blank"
-              rel="noopener noreferrer"
+            {/* Button that opens the react-pdf Modal */}
+            <button 
+              onClick={() => setIsModalOpen(true)}
               className="w-full sm:w-auto bg-transparent border-2 border-white hover:bg-white hover:text-corporate-navy text-white font-bold py-4 px-8 rounded transition duration-300 flex items-center justify-center gap-2 cursor-pointer"
             >
               <FaEye className="w-5 h-5 flex-shrink-0" />
               View NUPRC Permit
-            </a>
+            </button>
           </div>
           
         </div>
       </div>
+
+      {/* Render the modal ONLY on the client when button is clicked */}
+      {isModalOpen && (
+        <PDFModal 
+          activeDoc={activeDoc} 
+          onClose={() => setIsModalOpen(false)} 
+        />
+      )}
     </section>
   );
 }
