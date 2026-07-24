@@ -1,6 +1,7 @@
 // app/layout.tsx
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
 import "../globals.css";
 
 // Body Font: Clean and readable
@@ -68,6 +69,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
       <body className="font-sans antialiased text-corporate-slate bg-corporate-cream">
         {children}
+        <Analytics />
       </body>
     </html>
   );
