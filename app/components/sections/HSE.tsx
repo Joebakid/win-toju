@@ -47,9 +47,12 @@ export default function HSE() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {policies.map((policy, index) => (
-            <div key={index} className="flex gap-6 bg-slate-800/40 p-8 rounded-lg border border-slate-700 hover:border-corporate-red transition duration-300">
-              <div className="flex-shrink-0 mt-1">
-                {/* Dynamically render the React Icon */}
+            <div 
+              key={index} 
+              // Changed to flex-col on mobile, sm:flex-row on larger screens
+              className="flex flex-col sm:flex-row gap-4 sm:gap-6 bg-slate-800/40 p-6 sm:p-8 rounded-lg border border-slate-700 hover:border-corporate-red transition duration-300"
+            >
+              <div className="flex-shrink-0 sm:mt-1">
                 {policy.icon}
               </div>
               <div>

@@ -6,7 +6,7 @@ export default function Team() {
     { 
       name: "Pst. Ogbaro Godwin Toju", 
       role: "Chief Executive Officer", 
-      linkedIn: "#" 
+      linkedIn: "https://www.linkedin.com/in/godwin-ogbaro-845a29a0/" 
     },
     { 
       name: "Mr. Ogbaro Tosan Francis", 
