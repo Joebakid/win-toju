@@ -9,6 +9,13 @@ export default function PageLoader() {
   const loaderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // 1. Force the user to the very top of the page instantly
+    window.scrollTo(0, 0);
+
+    // 2. Lock scrolling on both the body and the HTML root (fixes mobile/safari bypasses)
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
     // Wait a brief moment to ensure fonts and layout have settled, then fade out
     const timer = setTimeout(() => {
       if (loaderRef.current) {
@@ -17,12 +24,22 @@ export default function PageLoader() {
           y: -50,
           duration: 0.8,
           ease: "power3.inOut",
-          onComplete: () => setIsLoading(false),
+          onComplete: () => {
+            setIsLoading(false);
+            // 3. Unlock scrolling when the animation finishes
+            document.body.style.overflow = "";
+            document.documentElement.style.overflow = "";
+          },
         });
       }
     }, 1000); // 1-second delay before fading out
 
-    return () => clearTimeout(timer);
+    // Cleanup function: unlock scroll if the component unmounts unexpectedly
+    return () => {
+      clearTimeout(timer);
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
   }, []);
 
   if (!isLoading) return null;
