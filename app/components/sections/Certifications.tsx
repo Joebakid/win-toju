@@ -131,27 +131,27 @@ export default function Certifications() {
         </div>
       </div>
 
-      {/* Document Viewer Modal - COMPLETELY REDESIGNED */}
+      {/* Document Viewer Modal - REDESIGNED FOR MAX CLICKABLE SPACE */}
       {activeDoc && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center">
           
-          {/* 1. Clickable Backdrop */}
+          {/* 1. Clickable Backdrop (Fills 100% of screen) */}
           <div 
             className="absolute inset-0 bg-corporate-navy/95 backdrop-blur-md cursor-pointer"
             onClick={() => setActiveDoc(null)}
           ></div>
           
-          {/* 2. Floating Close Button (Outside the document container) */}
+          {/* 2. Floating Close Button (Fixed to the top-right corner of the SCREEN) */}
           <button 
             onClick={() => setActiveDoc(null)}
-            className="absolute top-6 right-6 md:top-10 md:right-10 z-[10000] bg-corporate-red hover:bg-red-700 text-white p-3 md:p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center"
+            className="absolute top-4 right-4 md:top-8 md:right-8 z-[10000] bg-corporate-red hover:bg-red-700 text-white p-3 md:p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center cursor-pointer"
             aria-label="Close document"
           >
-            <FaTimes className="w-6 h-6 md:w-8 md:h-8" />
+            <FaTimes className="w-5 h-5 md:w-6 md:h-6" />
           </button>
 
-          {/* 3. Pure Iframe Container with Loader */}
-          <div className="relative z-10 w-full max-w-5xl h-[85vh] bg-gray-200 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300 ring-4 ring-white/10 mt-12 md:mt-0">
+          {/* 3. Pure Iframe Container (Strictly 80% of screen size to guarantee empty space) */}
+          <div className="relative z-10 w-[90vw] md:w-[80vw] h-[80vh] max-w-6xl bg-gray-200 rounded-xl overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-300 ring-4 ring-white/10">
             
             {/* Show loader while iframe is loading */}
             {!isIframeLoaded && (
