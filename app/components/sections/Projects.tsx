@@ -1,8 +1,10 @@
 // app/components/sections/Projects.tsx
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useState, useRef, useEffect, ReactNode } from "react";
 import { FaIndustry, FaShip, FaRecycle, FaTimes } from "react-icons/fa";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Define the Project Type
 type Project = {
@@ -10,7 +12,7 @@ type Project = {
   title: string;
   client: string;
   category: string;
-  icon: ReactNode; // <-- Updated from JSX.Element to ReactNode to fix Vercel build
+  icon: ReactNode;
   description: string;
   fullDescription: string;
   image: string;
@@ -18,6 +20,7 @@ type Project = {
 
 export default function Projects() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   // Extended Placeholder data
   const projectsList: Project[] = [
@@ -53,6 +56,47 @@ export default function Projects() {
     },
   ];
 
+  // GSAP Scroll Animations
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Animate Header Text
+      gsap.fromTo(".projects-header-anim",
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          }
+        }
+      );
+
+      // 2. Animate Project Cards
+      gsap.fromTo(".projects-card-anim",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".projects-grid",
+            start: "top 85%",
+          }
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   // Prevent background scrolling when modal is open
   const handleOpenModal = (project: Project) => {
     setSelectedProject(project);
@@ -65,30 +109,30 @@ export default function Projects() {
   };
 
   return (
-    <section id="projects" className="py-24 bg-white border-t border-gray-100 relative">
+    <section id="projects" ref={sectionRef} className="py-24 bg-white border-t border-gray-100 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-16 space-y-4">
-          <div className="inline-block border-l-4 border-corporate-red pl-4">
+          <div className="projects-header-anim opacity-0 inline-block border-l-4 border-corporate-red pl-4">
             <h2 className="text-corporate-red font-bold tracking-widest uppercase text-sm">
               Our Track Record
             </h2>
           </div>
-          <h3 className="text-3xl md:text-5xl font-black text-corporate-navy tracking-tight">
+          <h3 className="projects-header-anim opacity-0 text-3xl md:text-5xl font-black text-corporate-navy tracking-tight">
             Featured Projects & Operations.
           </h3>
-          <p className="text-corporate-slate text-lg leading-relaxed">
+          <p className="projects-header-anim opacity-0 text-corporate-slate text-lg leading-relaxed">
             A glimpse into our operational capacity. We execute complex logistics and contracting requirements for Nigeria's leading energy and infrastructure sectors.
           </p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="projects-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projectsList.map((project) => (
             <div 
               key={project.id} 
-              className="bg-corporate-cream rounded-lg overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col cursor-pointer"
+              className="projects-card-anim opacity-0 bg-corporate-cream rounded-lg overflow-hidden border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-300 group flex flex-col cursor-pointer"
               onClick={() => handleOpenModal(project)}
             >
               {/* Image Placeholder */}

@@ -1,7 +1,7 @@
 // app/components/sections/Certifications.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import { 
   FaBuilding, 
@@ -14,12 +14,15 @@ import {
   FaIdBadge,
   FaExternalLinkAlt
 } from "react-icons/fa";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Dynamically import the modal and disable SSR to prevent DOMMatrix errors
 const PDFModal = dynamic(() => import("../ui/PDFModal"), { ssr: false });
 
 export default function Certifications() {
   const [activeDoc, setActiveDoc] = useState<string | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
 
   // Prevent background scrolling when the modal is active
   useEffect(() => {
@@ -86,27 +89,71 @@ export default function Certifications() {
     },
   ];
 
+  // GSAP Scroll Animations
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      // 1. Animate Header Text
+      gsap.fromTo(".cert-header-anim",
+        { y: 30, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          }
+        }
+      );
+
+      // 2. Animate Document Cards
+      gsap.fromTo(".cert-card-anim",
+        { y: 40, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          stagger: 0.1, // Faster stagger for the grid
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".cert-grid",
+            start: "top 85%",
+          }
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="certifications" className="py-24 bg-corporate-cream relative">
+    <section id="certifications" ref={sectionRef} className="py-24 bg-corporate-cream relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12 text-center">
         
         <div className="max-w-3xl mx-auto mb-16 space-y-4 flex flex-col items-center">
-          <div className="inline-block border-b-4 border-corporate-red pb-2">
+          <div className="cert-header-anim opacity-0 inline-block border-b-4 border-corporate-red pb-2">
             <h2 className="text-corporate-red font-bold tracking-widest uppercase text-sm">
               Resource Center
             </h2>
           </div>
-          <h3 className="text-3xl md:text-5xl font-black text-corporate-navy tracking-tight">
+          <h3 className="cert-header-anim opacity-0 text-3xl md:text-5xl font-black text-corporate-navy tracking-tight">
             Regulatory Certifications
           </h3>
-          <p className="text-corporate-slate text-lg leading-relaxed max-w-2xl">
+          <p className="cert-header-anim opacity-0 text-corporate-slate text-lg leading-relaxed max-w-2xl">
             Win-Toju System Enterprise Limited operates with full transparency. Below is our verifiable documentation establishing our statutory and operational compliance within Nigeria.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+        <div className="cert-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
           {documents.map((doc, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow">
+            <div 
+              key={index} 
+              className="cert-card-anim opacity-0 bg-white p-6 rounded-lg border border-gray-200 shadow-sm flex items-start gap-4 hover:shadow-md transition-shadow"
+            >
               
               <div className="flex-shrink-0 bg-red-100 p-3 rounded text-corporate-red">
                 {doc.icon}
