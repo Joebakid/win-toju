@@ -1,4 +1,3 @@
-// app/components/sections/Certifications.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -148,7 +147,8 @@ export default function Certifications() {
           </p>
         </div>
 
-        <div className="cert-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+        {/* CHANGED: Adjusted breakpoints from sm/lg to md/xl to prevent squishing */}
+        <div className="cert-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 text-left">
           {documents.map((doc, index) => (
             <div 
               key={index} 

@@ -1,4 +1,3 @@
-// app/components/layout/Navbar.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -52,13 +51,14 @@ export default function Navbar() {
             <Logo />
           </Link>
 
-          <nav className="hidden md:flex space-x-5 lg:space-x-8 items-center">
+          {/* CHANGED: md:flex to lg:flex to wait for a wider screen before showing desktop nav */}
+          <nav className="hidden lg:flex space-x-4 xl:space-x-8 items-center">
             {navLinks.map((link) => (
               <Link 
                 key={link.name} 
                 href={link.href} 
                 // ADDED: opacity-0
-                className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs lg:text-sm uppercase tracking-wide"
+                className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide"
               >
                 {link.name}
               </Link>
@@ -73,8 +73,8 @@ export default function Navbar() {
             </Link>
           </nav>
 
-          {/* ADDED: opacity-0 */}
-          <div className="nav-anim opacity-0 md:hidden flex items-center">
+          {/* CHANGED: md:hidden to lg:hidden to show the hamburger icon up to 1024px */}
+          <div className="nav-anim opacity-0 lg:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="text-corporate-navy hover:text-corporate-red focus:outline-none"
@@ -92,7 +92,8 @@ export default function Navbar() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+        // CHANGED: md:hidden to lg:hidden here as well
+        <div className="lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
           <div className="px-6 pt-4 pb-6 space-y-4">
             {navLinks.map((link) => (
               <Link
