@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import { FaLinkedin } from "react-icons/fa";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -13,7 +14,8 @@ export default function Team() {
     { 
       name: "Pst. Ogbaro Godwin Toju", 
       role: "Chief Executive Officer", 
-      linkedIn: "https://www.linkedin.com/in/godwin-ogbaro-845a29a0/" 
+      linkedIn: "https://www.linkedin.com/in/godwin-ogbaro-845a29a0/",
+      image: "/win-toju-photos/1.png" 
     },
     { 
       name: "Mr. Ogbaro Tosan Francis", 
@@ -31,9 +33,10 @@ export default function Team() {
       linkedIn: "#" 
     },
     { 
-      name: "Miss Omunu Ufuoma Anna", 
+      name: "Oki Samuel", 
       role: "Company Secretary", 
-      linkedIn: "#" 
+      linkedIn: "#",
+      image: "/win-toju-photos/sammy.PNG" 
     },
   ];
 
@@ -109,9 +112,19 @@ export default function Team() {
               key={index} 
               className="team-card-anim bg-white p-8 rounded-lg border-t-4 border-corporate-navy shadow-md hover:shadow-xl transition-shadow flex flex-col items-center text-center group"
             >
-              {/* Initials Avatar */}
-              <div className="w-20 h-20 rounded-full bg-corporate-navy text-white flex items-center justify-center text-2xl font-black mb-6 shadow-inner group-hover:scale-110 transition-transform duration-300">
-                {getInitials(member.name)}
+              {/* Photo or Initials Avatar */}
+              <div className="relative w-20 h-20 rounded-full bg-corporate-navy text-white flex items-center justify-center text-2xl font-black mb-6 shadow-inner group-hover:scale-110 transition-transform duration-300 overflow-hidden">
+                {member.image ? (
+                  <Image
+                    src={member.image}
+                    alt={`${member.name} Profile Photo`}
+                    fill
+                    className="object-cover"
+                    sizes="80px"
+                  />
+                ) : (
+                  getInitials(member.name)
+                )}
               </div>
               
               {/* Member Details */}
