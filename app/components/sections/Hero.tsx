@@ -53,14 +53,30 @@ export default function Hero() {
   }, [isModalOpen]);
 
   return (
-    <section ref={heroRef} className="relative w-full min-h-[85vh] bg-corporate-navy flex items-center py-20 lg:py-0">
-      {/* Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-corporate-navy to-corporate-navy/80 z-0"></div>
+    <section ref={heroRef} className="relative w-full min-h-[85vh] bg-corporate-navy flex items-center py-20 lg:py-0 overflow-hidden">
       
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full mt-10 lg:mt-0">
+      {/* Background Image Layer - Positioned to fill the empty right space */}
+      <div className="absolute inset-0 z-0 flex justify-end">
+        <div className="w-full lg:w-2/3 h-full relative overflow-hidden">
+          
+          {/* Gradient Masks to blend the image seamlessly into the navy background */}
+          <div className="absolute inset-0 bg-gradient-to-r from-corporate-navy via-corporate-navy/80 to-transparent z-10 block"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-corporate-navy/80 via-transparent to-transparent z-10 lg:hidden"></div>
+          
+          {/* The Image - Updated to Engineering theme, added blur-sm and scale-105 */}
+          <div 
+            className="w-full h-full bg-cover bg-center bg-no-repeat opacity-40 lg:opacity-60 mix-blend-luminosity blur-sm transform scale-105"
+            style={{ 
+              // High-quality engineering/industrial photo from Unsplash
+              backgroundImage: "url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=2070&q=80')" 
+            }}
+          ></div>
+        </div>
+      </div>
+      
+      <div className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 w-full mt-10 lg:mt-0">
         <div className="max-w-3xl space-y-6 md:space-y-8">
           
-          {/* ADDED: opacity-0 to hide elements before JS loads */}
           <div className="hero-anim opacity-0 inline-block border-l-4 border-corporate-red pl-3 md:pl-4">
             <h2 className="text-corporate-cream font-semibold tracking-widest uppercase text-xs md:text-sm">
               Marine Logistics & General Contracting
