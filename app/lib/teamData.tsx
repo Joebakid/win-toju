@@ -180,7 +180,7 @@ export const teamMembers: TeamMember[] = [
   },
   { 
     slug: "oki-samuel",
-    name: "Oki-Samuel", 
+    name: "Oki Samuel", 
     role: "Company Secretary", 
     linkedIn: "https://www.linkedin.com/in/okizaweb3pro/",
     image: "/win-toju-photos/sammy.PNG",
