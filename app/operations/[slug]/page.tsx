@@ -50,16 +50,12 @@ export default function OperationPage({ params }: OperationProps) {
 
   return (
     <>
-      {/* 
-        FIX: Removed the CSS wrapper hack. 
-        Now we just pass transparent={true} directly to the updated Navbar.
-      */}
       <Navbar transparent={true} />
 
       <main ref={pageRef} className="min-h-screen bg-corporate-cream pb-16 md:pb-24">
         
         {/* HERO SECTION */}
-        <section className="relative w-full h-[55vh] md:h-[65vh] min-h-[400px] flex flex-col items-center justify-center pt-24">
+        <section className="relative w-full h-[60vh] md:h-[65vh] min-h-[450px] flex flex-col items-center justify-center pt-24 px-4">
           
           {/* Background Image & Overlay */}
           <div className="absolute inset-0 z-0 bg-corporate-navy">
@@ -72,28 +68,33 @@ export default function OperationPage({ params }: OperationProps) {
               className="object-cover object-center" 
               priority
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90" /> 
+            <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/70 to-black/90" /> 
           </div>
 
           {/* Hero Text Content */}
-          <div className="relative z-10 text-center px-4 flex flex-col items-center w-full max-w-5xl mt-8">
+          <div className="relative z-10 text-center flex flex-col items-center w-full max-w-5xl mt-6">
             
-            <div className="hero-anim bg-black/40 backdrop-blur-sm px-5 py-2 rounded-full border border-white/10 text-gray-300 text-sm md:text-base font-semibold mb-6 flex items-center gap-2 tracking-wide shadow-lg">
+            {/* 
+              FIXED MOBILE BREADCRUMB: 
+              Added flex-wrap, text-center, adjusted padding, and smaller mobile font size 
+              so long titles wrap cleanly inside a neat pill shape.
+            */}
+            <div className="hero-anim bg-black/50 backdrop-blur-md px-4 py-3 rounded-2xl md:rounded-full border border-white/15 text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-6 flex flex-wrap items-center justify-center gap-1.5 md:gap-2 tracking-wide shadow-xl max-w-full">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
-              <span>/</span>
+              <span className="text-gray-500">/</span>
               <span className="text-gray-400">Operations</span>
-              <span>/</span>
-              <span className="text-[#38bdf8]">{operation.title}</span>
+              <span className="text-gray-500">/</span>
+              <span className="text-[#38bdf8] text-center font-bold">{operation.title}</span>
             </div>
 
             <h1 
-              className="hero-anim text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-2xl mb-4" 
+              className="hero-anim text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-2xl mb-3 px-2" 
               style={{ fontFamily: 'var(--font-montserrat), system-ui, sans-serif' }}
             >
               {operation.title}
             </h1>
             
-            <h2 className="hero-anim text-lg md:text-2xl font-semibold text-gray-300 drop-shadow-lg tracking-wide max-w-2xl mx-auto">
+            <h2 className="hero-anim text-sm sm:text-base md:text-2xl font-semibold text-gray-300 drop-shadow-lg tracking-wide max-w-2xl mx-auto px-2">
               {operation.subtitle}
             </h2>
           </div>
