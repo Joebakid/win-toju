@@ -1,11 +1,16 @@
+// app/components/layout/Navbar.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Logo from "../ui/Logo"; // Adjust path if needed
+import Logo from "../ui/Logo"; 
 import gsap from "gsap";
 
-export default function Navbar() {
+interface NavbarProps {
+  transparent?: boolean;
+}
+
+export default function Navbar({ transparent = false }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isOperationsOpen, setIsOperationsOpen] = useState(false);
   const [isMobileOpsOpen, setIsMobileOpsOpen] = useState(false);
@@ -37,8 +42,20 @@ export default function Navbar() {
     return () => ctx.revert();
   }, []);
 
+  const headerClasses = transparent 
+    ? "absolute top-0 w-full z-50 bg-transparent" 
+    : "sticky top-0 w-full z-50 bg-white shadow-sm border-b border-gray-100";
+    
+  const topLinkClasses = transparent
+    ? "text-white hover:text-gray-200"
+    : "text-corporate-slate hover:text-corporate-red";
+    
+  const hamburgerClasses = transparent
+    ? "text-white hover:text-gray-200"
+    : "text-corporate-navy hover:text-corporate-red";
+
   return (
-    <header ref={headerRef} className="sticky top-0 w-full z-50 bg-white shadow-sm border-b border-gray-100">
+    <header ref={headerRef} className={headerClasses}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex justify-between items-center h-20">
           
@@ -50,26 +67,28 @@ export default function Navbar() {
               setIsOperationsOpen(false);
             }}
           >
-            <Logo />
+            {/* FIX: Removed the brightness-0 invert filter. The logo will now display normally. */}
+            <div className="transition-all">
+              <Logo />
+            </div>
           </Link>
 
           <nav className="hidden lg:flex space-x-4 xl:space-x-8 items-center">
             
-            <Link href="/" className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide">
+            <Link href="/" className={`nav-anim opacity-0 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide ${topLinkClasses}`}>
               Home
             </Link>
 
-            <Link href="/#about" className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide">
+            <Link href="/#about" className={`nav-anim opacity-0 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide ${topLinkClasses}`}>
               About
             </Link>
 
-            {/* OUR OPERATIONS DROPDOWN */}
             <div 
               className="relative nav-anim opacity-0"
               onMouseEnter={() => setIsOperationsOpen(true)}
               onMouseLeave={() => setIsOperationsOpen(false)}
             >
-              <button className="flex items-center gap-1.5 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide py-2 focus:outline-none">
+              <button className={`flex items-center gap-1.5 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide py-2 focus:outline-none ${topLinkClasses}`}>
                 Our Operations
                 <svg className={`w-3.5 h-3.5 transition-transform duration-200 ${isOperationsOpen ? "rotate-180 text-corporate-red" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
@@ -77,15 +96,13 @@ export default function Navbar() {
               </button>
 
               {isOperationsOpen && (
-                // Added !bg-white to ensure the container always stays white
-                <div className="absolute left-0 mt-0 w-72 !bg-white rounded-lg shadow-xl border border-gray-100 py-3 z-50">
+                <div className="absolute left-0 mt-0 w-72 bg-white rounded-lg shadow-xl border border-gray-100 py-3 z-50">
                   {operationsLinks.map((op) => (
                     <Link
                       key={op.name}
                       href={op.href}
                       onClick={() => setIsOperationsOpen(false)}
-                      // Added !text priorities so it ignores the white-text override from dynamic pages
-                      className="block px-5 py-2.5 text-xs xl:text-sm font-medium !text-corporate-slate hover:!bg-slate-50 hover:!text-corporate-red transition-colors"
+                      className="block px-5 py-2.5 text-xs xl:text-sm font-medium text-corporate-slate hover:bg-slate-50 hover:text-corporate-red transition-colors"
                     >
                       {op.name}
                     </Link>
@@ -94,11 +111,11 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link href="/#news" className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide">
+            <Link href="/#news" className={`nav-anim opacity-0 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide ${topLinkClasses}`}>
               Recent News
             </Link>
 
-            <Link href="/#foundation" className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide">
+            <Link href="/#foundation" className={`nav-anim opacity-0 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide ${topLinkClasses}`}>
               Win-Toju Foundation
             </Link>
             
@@ -110,7 +127,7 @@ export default function Navbar() {
           <div className="nav-anim opacity-0 lg:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-corporate-navy hover:text-corporate-red focus:outline-none"
+              className={`focus:outline-none ${hamburgerClasses}`}
             >
               <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {isMobileMenuOpen ? (
@@ -125,24 +142,24 @@ export default function Navbar() {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="lg:hidden !bg-white border-t border-gray-100 absolute w-full shadow-lg">
+        <div className="lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
           <div className="px-6 pt-4 pb-6 space-y-4">
             
-            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide">
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide">
               Home
             </Link>
 
-            <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="block !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide">
+            <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide">
               About
             </Link>
 
             <div>
               <button
                 onClick={() => setIsMobileOpsOpen(!isMobileOpsOpen)}
-                className="flex items-center justify-between w-full !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide py-1"
+                className="flex items-center justify-between w-full text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide py-1"
               >
                 <span>Our Operations</span>
-                <svg className={`w-4 h-4 transition-transform duration-200 ${isMobileOpsOpen ? "rotate-180 !text-corporate-red" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className={`w-4 h-4 transition-transform duration-200 ${isMobileOpsOpen ? "rotate-180 text-corporate-red" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -157,7 +174,7 @@ export default function Navbar() {
                         setIsMobileMenuOpen(false);
                         setIsMobileOpsOpen(false);
                       }}
-                      className="block text-sm font-medium !text-gray-600 hover:!text-corporate-red py-1"
+                      className="block text-sm font-medium text-gray-600 hover:text-corporate-red py-1"
                     >
                       {op.name}
                     </Link>
@@ -166,16 +183,16 @@ export default function Navbar() {
               )}
             </div>
 
-            <Link href="/#news" onClick={() => setIsMobileMenuOpen(false)} className="block !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide">
+            <Link href="/#news" onClick={() => setIsMobileMenuOpen(false)} className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide">
               Recent News
             </Link>
 
-            <Link href="/#foundation" onClick={() => setIsMobileMenuOpen(false)} className="block !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide">
+            <Link href="/#foundation" onClick={() => setIsMobileMenuOpen(false)} className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide">
               Win-Toju Foundation
             </Link>
 
             <div className="pt-2">
-              <Link href="/#contact" onClick={() => setIsMobileMenuOpen(false)} className="block text-center !bg-corporate-navy hover:!bg-slate-800 !text-white font-bold py-3 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide">
+              <Link href="/#contact" onClick={() => setIsMobileMenuOpen(false)} className="block text-center bg-corporate-navy hover:bg-slate-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide">
                 Contact Us
               </Link>
             </div>
