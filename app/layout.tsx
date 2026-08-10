@@ -11,9 +11,10 @@ const inter = Inter({
   display: "swap",
 });
 
-// Heading Font: Wide, geometric, and industrial
+// Heading Font: Wide, geometric, and industrial (Updated with weights for maximum pop)
 const montserrat = Montserrat({
   subsets: ["latin"],
+  weight: ["400", "500", "700", "800", "900"], // 900 is required for 'font-black' to work
   variable: "--font-montserrat",
   display: "swap",
 });

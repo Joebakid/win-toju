@@ -63,6 +63,7 @@ export const teamMembers: TeamMember[] = [
     slug: "ogbaro-tosan-francis",
     name: "Mr. Ogbaro Tosan Francis", 
     role: "Financial Director", 
+     image: "/win-toju-photos/francis.jpeg",
     linkedIn: "#",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
@@ -105,6 +106,7 @@ export const teamMembers: TeamMember[] = [
     name: "Mrs. Betty Ogbaro Owubetime", 
     role: "General Manager", 
     linkedIn: "#",
+     image: "/win-toju-photos/betty.jpeg",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
         <h2 className="text-2xl md:text-3xl font-black text-corporate-navy mb-4 leading-tight">

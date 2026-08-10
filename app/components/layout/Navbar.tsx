@@ -2,32 +2,28 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Logo from "../ui/Logo";
+import Logo from "../ui/Logo"; // Adjust path if needed
 import gsap from "gsap";
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isOperationsOpen, setIsOperationsOpen] = useState(false);
+  const [isMobileOpsOpen, setIsMobileOpsOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
 
-  // Added the new Projects and Team sections to the navigation
-  const navLinks = [
-    { name: "About Us", href: "/#about" },
-    { name: "Services", href: "/#services" },
-    { name: "Projects", href: "/#projects" },
-    { name: "Team", href: "/#team" },
-    { name: "HSE & QA/QC", href: "/#hse" },
-    { name: "Certifications", href: "/#certifications" },
+  const operationsLinks = [
+    { name: "Marine Vessel Chartering & Logistics", href: "/operations/marine-logistics" },
+    { name: "Offshore & Oilfield Support Services", href: "/operations/oilfield-support" },
+    { name: "Claims Agency & Community Liaison", href: "/operations/claims-agency" },
+    { name: "Technical Manpower & Labor Supply", href: "/operations/manpower-supply" },
+    { name: "Onshore Waste Management", href: "/operations/waste-management" },
   ];
 
-  // GSAP Animation Effect
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Use fromTo to strictly define the start and end states, preventing flashes
-      gsap.fromTo(".nav-anim", 
-        { 
-          y: -20, 
-          opacity: 0 
-        },
+      gsap.fromTo(
+        ".nav-anim",
+        { y: -20, opacity: 0 },
         {
           y: 0,
           opacity: 1,
@@ -46,34 +42,71 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex justify-between items-center h-20">
           
-          {/* ADDED: opacity-0 to hide elements before JS loads */}
-          <Link href="/" className="nav-anim opacity-0 w-32 md:w-40 flex-shrink-0 flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
+          <Link 
+            href="/" 
+            className="nav-anim opacity-0 w-32 md:w-40 flex-shrink-0 flex items-center" 
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              setIsOperationsOpen(false);
+            }}
+          >
             <Logo />
           </Link>
 
-          {/* CHANGED: md:flex to lg:flex to wait for a wider screen before showing desktop nav */}
           <nav className="hidden lg:flex space-x-4 xl:space-x-8 items-center">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                href={link.href} 
-                // ADDED: opacity-0
-                className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide"
-              >
-                {link.name}
-              </Link>
-            ))}
             
-            {/* ADDED: opacity-0 */}
-            <Link 
-              href="/#contact" 
-              className="nav-anim opacity-0 bg-corporate-navy hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide whitespace-nowrap"
+            <Link href="/" className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide">
+              Home
+            </Link>
+
+            <Link href="/#about" className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide">
+              About
+            </Link>
+
+            {/* OUR OPERATIONS DROPDOWN */}
+            <div 
+              className="relative nav-anim opacity-0"
+              onMouseEnter={() => setIsOperationsOpen(true)}
+              onMouseLeave={() => setIsOperationsOpen(false)}
             >
+              <button className="flex items-center gap-1.5 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide py-2 focus:outline-none">
+                Our Operations
+                <svg className={`w-3.5 h-3.5 transition-transform duration-200 ${isOperationsOpen ? "rotate-180 text-corporate-red" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isOperationsOpen && (
+                // Added !bg-white to ensure the container always stays white
+                <div className="absolute left-0 mt-0 w-72 !bg-white rounded-lg shadow-xl border border-gray-100 py-3 z-50">
+                  {operationsLinks.map((op) => (
+                    <Link
+                      key={op.name}
+                      href={op.href}
+                      onClick={() => setIsOperationsOpen(false)}
+                      // Added !text priorities so it ignores the white-text override from dynamic pages
+                      className="block px-5 py-2.5 text-xs xl:text-sm font-medium !text-corporate-slate hover:!bg-slate-50 hover:!text-corporate-red transition-colors"
+                    >
+                      {op.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link href="/#news" className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide">
+              Recent News
+            </Link>
+
+            <Link href="/#foundation" className="nav-anim opacity-0 text-corporate-slate hover:text-corporate-red font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide">
+              Win-Toju Foundation
+            </Link>
+            
+            <Link href="/#contact" className="nav-anim opacity-0 bg-corporate-navy hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide whitespace-nowrap">
               Contact Us
             </Link>
           </nav>
 
-          {/* CHANGED: md:hidden to lg:hidden to show the hamburger icon up to 1024px */}
           <div className="nav-anim opacity-0 lg:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -92,25 +125,57 @@ export default function Navbar() {
       </div>
 
       {isMobileMenuOpen && (
-        // CHANGED: md:hidden to lg:hidden here as well
-        <div className="lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
+        <div className="lg:hidden !bg-white border-t border-gray-100 absolute w-full shadow-lg">
           <div className="px-6 pt-4 pb-6 space-y-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide"
+            
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide">
+              Home
+            </Link>
+
+            <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="block !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide">
+              About
+            </Link>
+
+            <div>
+              <button
+                onClick={() => setIsMobileOpsOpen(!isMobileOpsOpen)}
+                className="flex items-center justify-between w-full !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide py-1"
               >
-                {link.name}
-              </Link>
-            ))}
+                <span>Our Operations</span>
+                <svg className={`w-4 h-4 transition-transform duration-200 ${isMobileOpsOpen ? "rotate-180 !text-corporate-red" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+
+              {isMobileOpsOpen && (
+                <div className="pl-4 mt-2 space-y-2 border-l-2 border-corporate-red">
+                  {operationsLinks.map((op) => (
+                    <Link
+                      key={op.name}
+                      href={op.href}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileOpsOpen(false);
+                      }}
+                      className="block text-sm font-medium !text-gray-600 hover:!text-corporate-red py-1"
+                    >
+                      {op.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <Link href="/#news" onClick={() => setIsMobileMenuOpen(false)} className="block !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide">
+              Recent News
+            </Link>
+
+            <Link href="/#foundation" onClick={() => setIsMobileMenuOpen(false)} className="block !text-corporate-slate hover:!text-corporate-red font-semibold text-base uppercase tracking-wide">
+              Win-Toju Foundation
+            </Link>
+
             <div className="pt-2">
-              <Link
-                href="/#contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="block text-center bg-corporate-navy hover:bg-slate-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide"
-              >
+              <Link href="/#contact" onClick={() => setIsMobileMenuOpen(false)} className="block text-center !bg-corporate-navy hover:!bg-slate-800 !text-white font-bold py-3 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide">
                 Contact Us
               </Link>
             </div>

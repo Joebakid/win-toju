@@ -28,10 +28,21 @@ export default function TeamMemberProfile({ params }: ProfileProps) {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(".profile-anim",
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out", delay: 0.1 }
-      );
+      gsap.from(".hero-anim", { 
+        y: 30, 
+        opacity: 0, 
+        duration: 0.8, 
+        stagger: 0.15, 
+        ease: "power3.out" 
+      });
+      
+      gsap.from(".content-anim", { 
+        y: 40, 
+        opacity: 0, 
+        duration: 0.8, 
+        ease: "power3.out", 
+        delay: 0.4 
+      });
     }, pageRef);
 
     return () => ctx.revert();
@@ -41,61 +52,85 @@ export default function TeamMemberProfile({ params }: ProfileProps) {
     <>
       <Navbar />
 
-      {/* Adjusted padding: pt-24 on mobile, pt-32 on desktop. px-4 on mobile to give more screen real estate */}
-      <main ref={pageRef} className="min-h-screen bg-corporate-cream pt-24 md:pt-32 pb-16 md:pb-24 px-4 sm:px-6 md:px-12">
-        <div className="max-w-4xl mx-auto">
+      <main ref={pageRef} className="min-h-screen bg-corporate-cream pb-16 md:pb-24">
+        
+        <section className="relative w-full h-[65vh] md:h-[75vh] min-h-[500px] flex flex-col items-center justify-center pt-20">
           
-          <Link 
-            href="/#team" 
-            className="profile-anim opacity-0 inline-flex items-center gap-2 text-corporate-navy hover:text-corporate-red font-semibold mb-6 md:mb-8 transition-colors text-sm sm:text-base"
-          >
-            <FaArrowLeft /> Back to Leadership Team
-          </Link>
-
-          <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-t-8 border-corporate-red">
+          {/* Background Image & Overlay */}
+          <div className="absolute inset-0 z-0 bg-corporate-navy">
+            {member.image ? (
+              <Image
+                src={member.image}
+                alt={`${member.name} - ${member.role}`}
+                fill
+                quality={100}
+                sizes="100vw"
+                className="object-cover object-center md:object-[center_40%]" 
+                priority
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-white/10 text-9xl font-black">
+                {getInitials(member.name)}
+              </div>
+            )}
             
-            {/* Header Section: Reduced padding (p-6) and gap for mobile */}
-            <div className="profile-anim opacity-0 p-6 sm:p-8 md:p-12 bg-corporate-navy text-white flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 text-center md:text-left">
-              
-              {/* Profile Image: Scaled down (w-20) for mobile, up to w-32 for desktop */}
-              <div className="relative w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full bg-white/10 overflow-hidden border-4 border-white/20 flex-shrink-0 flex items-center justify-center text-2xl md:text-3xl font-bold shadow-2xl">
-                {member.image ? (
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                  />
-                ) : (
-                  getInitials(member.name)
-                )}
-              </div>
-              
-              <div className="flex-1 mt-2 md:mt-4 space-y-1.5 md:space-y-2">
-                {/* Typography scales from text-2xl (mobile) to text-4xl (desktop) */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-tight leading-tight">{member.name}</h1>
-                <p className="text-corporate-red font-bold text-sm sm:text-base md:text-lg uppercase tracking-widest">{member.role}</p>
-                
-                {member.linkedIn && member.linkedIn !== "#" && (
-                  <a 
-                    href={member.linkedIn}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 mt-3 md:mt-4 px-4 py-2 bg-white/10 hover:bg-white/20 rounded-full text-xs sm:text-sm font-semibold transition-colors"
-                  >
-                    <FaLinkedin className="text-[#0077b5] text-base" /> Connect on LinkedIn
-                  </a>
-                )}
-              </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-black/90" /> 
+          </div>
+
+          {/* Hero Text Content */}
+          <div className="relative z-10 text-center px-4 flex flex-col items-center w-full max-w-5xl mt-12">
+            
+            {/* ADDED: Semi-transparent pill background to the navigation breadcrumbs */}
+            <div className="hero-anim bg-black/40 backdrop-blur-sm px-3 py-2 rounded-full border border-white/10 text-gray-300 text-sm md:text-base font-semibold mb-6 flex items-center gap-2 tracking-wide shadow-lg">
+              <Link href="/" className="hover:text-white transition-colors">Home</Link>
+              <span>/</span>
+              <Link href="/#team" className="hover:text-white transition-colors">Leadership</Link>
+              <span>/</span>
+              <span className="text-[#38bdf8]">{member.name}</span>
             </div>
 
-            {/* Content Section: Reduced padding (p-6) to prevent squished text on narrow phone screens */}
-            <div className="profile-anim opacity-0 p-6 sm:p-8 md:p-12 bg-white rounded-b-2xl">
+            <h1 
+              className="hero-anim text-4xl md:text-5xl lg:text-7xl font-black text-white tracking-tight drop-shadow-2xl mb-4" 
+              style={{ fontFamily: 'var(--font-montserrat), system-ui, sans-serif' }}
+            >
+              {member.name}
+            </h1>
+            
+            <h2 className="hero-anim text-xl md:text-3xl font-extrabold text-[#38bdf8] drop-shadow-lg tracking-wide">
+              {member.role}
+            </h2>
+
+            {member.linkedIn && member.linkedIn !== "#" && (
+              <a 
+                href={member.linkedIn}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hero-anim mt-8 inline-flex items-center gap-2 px-6 py-3 bg-[#0077b5] hover:bg-[#005885] text-white rounded-full text-sm sm:text-base font-bold transition-all shadow-lg hover:scale-105"
+              >
+                <FaLinkedin className="text-xl" /> Connect on LinkedIn
+              </a>
+            )}
+          </div>
+        </section>
+
+        {/* BIO / PROFILE SECTION */}
+        <section className="content-anim max-w-4xl mx-auto px-4 sm:px-6 md:px-12 -mt-16 relative z-20">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 md:p-12 border-t-8 border-corporate-red">
+            
+            <Link 
+              href="/#team" 
+              className="inline-flex items-center gap-2 text-corporate-slate hover:text-corporate-red font-bold mb-8 transition-colors text-sm sm:text-base uppercase tracking-wider"
+            >
+              <FaArrowLeft /> Back to Leadership Team
+            </Link>
+            
+            <div className="prose prose-lg max-w-none">
               {member.fullProfile}
             </div>
 
           </div>
-        </div>
+        </section>
+
       </main>
 
       <Footer />
