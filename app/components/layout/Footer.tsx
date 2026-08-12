@@ -60,6 +60,24 @@ export default function Footer() {
     <footer ref={footerRef} className="bg-corporate-navy pt-20 pb-10 border-t-4 border-corporate-red overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
+        {/* NEW SECTION 5: FOOTER CALL-TO-ACTION */}
+        <div className="footer-anim opacity-0 bg-slate-900 border border-slate-800 p-8 md:p-12 rounded-2xl mb-16 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8 shadow-xl">
+          <div className="space-y-4 max-w-2xl">
+            <h3 className="text-2xl md:text-3xl font-black text-white">Need Qualified Technical Personnel for Your Upcoming Project?</h3>
+            <p className="text-slate-300 leading-relaxed">
+              Partner with Win-Toju System Enterprise Limited for certified marine and oilfield manpower, compliant workforce logistics, and flawless field execution.
+            </p>
+          </div>
+          <div className="flex-shrink-0">
+            <Link 
+              href="/contact" 
+              className="inline-block bg-corporate-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl text-center text-sm uppercase tracking-wider transition-all duration-300 shadow-lg"
+            >
+              Contact Us Today
+            </Link>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
           {/* Column 1: Brand & Contact */}
@@ -73,18 +91,20 @@ export default function Footer() {
             <div className="space-y-3 text-sm text-slate-300">
               <div className="flex items-start gap-3">
                 <FaMapMarkerAlt className="w-4 h-4 text-corporate-red flex-shrink-0 mt-1" />
-                <p>Suite A11, Golden Plaza, By Shell Contractor Road, Ogunu, Warri, Delta State.</p>
+                <p>Suite A11, Golden Plaza, By Shell Contractor Road, Ogunu, Warri, Delta State, Nigeria.</p>
               </div>
               <div className="flex items-center gap-3">
                 <FaPhoneAlt className="w-4 h-4 text-corporate-red flex-shrink-0" />
                 <p>
+                  Direct HR & Operations Line: <br />
                   <a href="tel:+2348057183697" className="hover:text-white transition-colors">08057183697</a> || <a href="tel:+2348067518929" className="hover:text-white transition-colors">08067518929</a>
                 </p>
               </div>
               <div className="flex items-center gap-3">
                 <FaEnvelope className="w-4 h-4 text-corporate-red flex-shrink-0" />
                 <p>
-                  <a href="mailto:wintojultd@gmail.com" className="hover:text-white transition-colors">wintojultd@gmail.com</a>
+                  <a href="mailto:info@wintoju.com" className="hover:text-white transition-colors">info@wintoju.com</a><br/>
+                  <a href="mailto:wintojultd@gmail.com" className="hover:text-white transition-colors text-slate-400">wintojultd@gmail.com</a>
                 </p>
               </div>
             </div>
@@ -101,7 +121,7 @@ export default function Footer() {
               <li><Link href="/#hse" className="hover:text-corporate-red transition-colors flex items-center gap-2">HSE & QA/QC</Link></li>
               <li><Link href="/#team" className="hover:text-corporate-red transition-colors flex items-center gap-2">Leadership Team</Link></li>
               <li><Link href="/#certifications" className="hover:text-corporate-red transition-colors flex items-center gap-2">Resource Center</Link></li>
-              <li><Link href="/#contact" className="hover:text-corporate-red transition-colors flex items-center gap-2">Contact Us</Link></li>
+              <li><Link href="/contact" className="hover:text-corporate-red transition-colors flex items-center gap-2">Contact Us</Link></li>
             </ul>
           </div>
 

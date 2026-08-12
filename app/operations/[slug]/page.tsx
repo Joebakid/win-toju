@@ -1,4 +1,3 @@
-// app/operations/[slug]/page.tsx
 "use client";
 
 import { useEffect, useRef, use } from "react";
@@ -74,11 +73,6 @@ export default function OperationPage({ params }: OperationProps) {
           {/* Hero Text Content */}
           <div className="relative z-10 text-center flex flex-col items-center w-full max-w-5xl mt-6">
             
-            {/* 
-              FIXED MOBILE BREADCRUMB: 
-              Added flex-wrap, text-center, adjusted padding, and smaller mobile font size 
-              so long titles wrap cleanly inside a neat pill shape.
-            */}
             <div className="hero-anim bg-black/50 backdrop-blur-md px-4 py-3 rounded-2xl md:rounded-full border border-white/15 text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-6 flex flex-wrap items-center justify-center gap-1.5 md:gap-2 tracking-wide shadow-xl max-w-full">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
               <span className="text-gray-500">/</span>
@@ -94,7 +88,7 @@ export default function OperationPage({ params }: OperationProps) {
               {operation.title}
             </h1>
             
-            <h2 className="hero-anim text-sm sm:text-base md:text-2xl font-semibold text-gray-300 drop-shadow-lg tracking-wide max-w-2xl mx-auto px-2">
+            <h2 className="hero-anim text-sm sm:text-base md:text-xl font-semibold text-gray-300 drop-shadow-lg tracking-wide max-w-3xl mx-auto px-2">
               {operation.subtitle}
             </h2>
           </div>

@@ -7,7 +7,6 @@ import Services from "./components/sections/Services";
 import Projects from "./components/sections/Projects"; 
 import HSE from "./components/sections/HSE";
 import Certifications from "./components/sections/Certifications";
-import Contact from "./components/sections/Contact";
 import Footer from "./components/layout/Footer";
 // import PageLoader from "./components/ui/PageLoader"; 
 
@@ -23,7 +22,6 @@ export default function Page() {
       <Projects />  
       <HSE />
       <Certifications />
-      <Contact />
       <Footer />
     </main>
   );

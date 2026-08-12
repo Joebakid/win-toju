@@ -17,11 +17,12 @@ export default function Navbar({ transparent = false }: NavbarProps) {
   const headerRef = useRef<HTMLElement>(null);
 
   const operationsLinks = [
-    { name: "Marine Vessel Chartering & Logistics", href: "/operations/marine-logistics" },
-    { name: "Offshore & Oilfield Support Services", href: "/operations/oilfield-support" },
-    { name: "Claims Agency & Community Liaison", href: "/operations/claims-agency" },
-    { name: "Technical Manpower & Labor Supply", href: "/operations/manpower-supply" },
-    { name: "Onshore Waste Management", href: "/operations/waste-management" },
+    { name: "Technical Manpower & Labour Supply", href: "/operations/labour-supply" },
+    { name: "Marine Logistics & Vessel Operations", href: "/operations/marine-logistics" },
+    { name: "Specialized Heavy-Lift Transportation", href: "/operations/specialized-transportation" },
+    { name: "General Contracting & Procurement", href: "/operations/general-contracting" },
+    { name: "Onshore Waste Management", href: "/operations/onshore-waste-management" },
+    { name: "Offshore Waste Management", href: "/operations/offshore-waste-management" },
   ];
 
   useEffect(() => {
@@ -67,7 +68,6 @@ export default function Navbar({ transparent = false }: NavbarProps) {
               setIsOperationsOpen(false);
             }}
           >
-            {/* FIX: Removed the brightness-0 invert filter. The logo will now display normally. */}
             <div className="transition-all">
               <Logo />
             </div>
@@ -96,7 +96,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
               </button>
 
               {isOperationsOpen && (
-                <div className="absolute left-0 mt-0 w-72 bg-white rounded-lg shadow-xl border border-gray-100 py-3 z-50">
+                <div className="absolute left-0 mt-0 w-80 bg-white rounded-lg shadow-xl border border-gray-100 py-3 z-50">
                   {operationsLinks.map((op) => (
                     <Link
                       key={op.name}
@@ -111,15 +111,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
               )}
             </div>
 
-            <Link href="/#news" className={`nav-anim opacity-0 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide ${topLinkClasses}`}>
-              Recent News
-            </Link>
-
-            <Link href="/#foundation" className={`nav-anim opacity-0 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide ${topLinkClasses}`}>
-              Win-Toju Foundation
-            </Link>
-            
-            <Link href="/#contact" className="nav-anim opacity-0 bg-corporate-navy hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide whitespace-nowrap">
+            <Link href="/contact" className="nav-anim opacity-0 bg-corporate-navy hover:bg-slate-800 text-white font-bold py-2.5 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide whitespace-nowrap">
               Contact Us
             </Link>
           </nav>
@@ -183,16 +175,8 @@ export default function Navbar({ transparent = false }: NavbarProps) {
               )}
             </div>
 
-            <Link href="/#news" onClick={() => setIsMobileMenuOpen(false)} className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide">
-              Recent News
-            </Link>
-
-            <Link href="/#foundation" onClick={() => setIsMobileMenuOpen(false)} className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide">
-              Win-Toju Foundation
-            </Link>
-
             <div className="pt-2">
-              <Link href="/#contact" onClick={() => setIsMobileMenuOpen(false)} className="block text-center bg-corporate-navy hover:bg-slate-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide">
+              <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="block text-center bg-corporate-navy hover:bg-slate-800 text-white font-bold py-3 px-6 rounded transition-colors duration-300 text-sm uppercase tracking-wide">
                 Contact Us
               </Link>
             </div>
