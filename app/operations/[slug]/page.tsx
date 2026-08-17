@@ -54,7 +54,8 @@ export default function OperationPage({ params }: OperationProps) {
       <main ref={pageRef} className="min-h-screen bg-corporate-cream pb-16 md:pb-24">
         
         {/* HERO SECTION */}
-        <section className="relative w-full h-[60vh] md:h-[65vh] min-h-[450px] flex flex-col items-center justify-center pt-24 px-4">
+        {/* FIX: Swapped fixed h-[60vh] for min-h-[60vh] and added pb-28/md:pb-32 to protect against the -mt-16 overlap */}
+        <section className="relative w-full min-h-[60vh] md:min-h-[65vh] flex flex-col items-center justify-center pt-32 pb-28 md:pb-32 px-4">
           
           {/* Background Image & Overlay */}
           <div className="absolute inset-0 z-0 bg-corporate-navy">
@@ -71,7 +72,7 @@ export default function OperationPage({ params }: OperationProps) {
           </div>
 
           {/* Hero Text Content */}
-          <div className="relative z-10 text-center flex flex-col items-center w-full max-w-5xl mt-6">
+          <div className="relative z-10 text-center flex flex-col items-center w-full max-w-5xl mt-4 md:mt-6">
             
             <div className="hero-anim bg-black/50 backdrop-blur-md px-4 py-3 rounded-2xl md:rounded-full border border-white/15 text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-6 flex flex-wrap items-center justify-center gap-1.5 md:gap-2 tracking-wide shadow-xl max-w-full">
               <Link href="/" className="hover:text-white transition-colors">Home</Link>
@@ -82,13 +83,13 @@ export default function OperationPage({ params }: OperationProps) {
             </div>
 
             <h1 
-              className="hero-anim text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-2xl mb-3 px-2" 
+              className="hero-anim text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight drop-shadow-2xl mb-4 px-2 leading-tight" 
               style={{ fontFamily: 'var(--font-montserrat), system-ui, sans-serif' }}
             >
               {operation.title}
             </h1>
             
-            <h2 className="hero-anim text-sm sm:text-base md:text-xl font-semibold text-gray-300 drop-shadow-lg tracking-wide max-w-3xl mx-auto px-2">
+            <h2 className="hero-anim text-sm sm:text-base md:text-xl font-semibold text-gray-300 drop-shadow-lg tracking-wide max-w-3xl mx-auto px-2 leading-relaxed">
               {operation.subtitle}
             </h2>
           </div>
