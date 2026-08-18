@@ -78,48 +78,48 @@ export default function OperationInquiryForm({
   };
 
   return (
-    <div className="bg-slate-900 text-white p-6 sm:p-10 rounded-2xl flex flex-col gap-8 border border-white/10 shadow-2xl mt-12 scroll-mt-24">
-      <div className="space-y-3 text-center md:text-left">
-        <h3 className="text-xl sm:text-2xl font-black text-white">{title}</h3>
-        <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-3xl">
+    <div className="bg-slate-900 text-white p-4 sm:p-6 rounded-xl flex flex-col gap-4 border border-white/10 shadow-xl mt-8 max-w-2xl mx-auto scroll-mt-24">
+      <div className="space-y-1.5 text-center md:text-left">
+        <h3 className="text-lg sm:text-xl font-bold text-white">{title}</h3>
+        <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
           {description}
         </p>
-        <p className="text-xs sm:text-sm text-corporate-cream pt-1 font-semibold">
+        <p className="text-[11px] sm:text-xs text-corporate-cream pt-0.5 font-semibold">
           Email: {email} &bull; Location: {location}
         </p>
       </div>
 
       {status === "success" ? (
-        <div className="bg-green-900/40 border border-green-500 p-6 rounded-xl text-center space-y-3">
-          <h4 className="text-xl font-bold text-green-300">Request Successfully Dispatched!</h4>
-          <p className="text-sm text-slate-200">
+        <div className="bg-green-900/40 border border-green-500 p-4 rounded-lg text-center space-y-2">
+          <h4 className="text-base font-bold text-green-300">Request Successfully Dispatched!</h4>
+          <p className="text-xs text-slate-200">
             Thank you. Your request has been securely submitted. Our operations team will contact you shortly.
           </p>
           <button 
             onClick={() => setStatus("idle")} 
-            className="mt-4 text-xs font-bold uppercase tracking-wider bg-corporate-red text-white px-4 py-2 rounded"
+            className="mt-2 text-[10px] font-bold uppercase tracking-wider bg-corporate-red text-white px-3 py-1.5 rounded"
           >
             Send Another Request
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-5 bg-slate-800/60 p-6 sm:p-8 rounded-xl border border-white/5">
+        <form onSubmit={handleSubmit} className="space-y-3.5 bg-slate-800/60 p-4 sm:p-5 rounded-lg border border-white/5">
           {status === "error" && (
-            <div className="p-4 bg-red-900/50 border border-red-500 text-red-200 rounded text-sm font-semibold">
+            <div className="p-3 bg-red-900/50 border border-red-500 text-red-200 rounded text-xs font-semibold">
               Failed to dispatch request. Please try again or reach out directly via email.
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                 Inquiry Topic / Objective
               </label>
               <select
                 name="topic"
                 value={formData.topic}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-corporate-red outline-none"
+                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-md text-white text-xs focus:border-corporate-red outline-none"
               >
                 {topicOptions.map((opt) => (
                   <option key={opt} value={opt}>{opt}</option>
@@ -128,7 +128,7 @@ export default function OperationInquiryForm({
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+              <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
                 Sender Phone Number
               </label>
               <input
@@ -138,13 +138,13 @@ export default function OperationInquiryForm({
                 placeholder="+234..."
                 value={formData.senderPhone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-corporate-red outline-none"
+                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-md text-white text-xs focus:border-corporate-red outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
               Sender Email Address
             </label>
             <input
@@ -154,30 +154,30 @@ export default function OperationInquiryForm({
               placeholder="name@company.com"
               value={formData.senderEmail}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-corporate-red outline-none"
+              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-md text-white text-xs focus:border-corporate-red outline-none"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
+            <label className="block text-[11px] font-bold uppercase tracking-wider text-slate-300 mb-1">
               Project Details / Message Space
             </label>
             <textarea
               name="message"
               required
-              rows={4}
+              rows={3}
               placeholder="Specify requirements, scope, timeline, or details..."
               value={formData.message}
               onChange={handleChange}
-              className="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:border-corporate-red outline-none resize-none"
+              className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-md text-white text-xs focus:border-corporate-red outline-none resize-none"
             ></textarea>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 pt-1">
             <button
               type="submit"
               disabled={status === "submitting"}
-              className="w-full bg-corporate-red hover:bg-red-700 text-white font-bold py-4 px-6 rounded-xl text-center text-sm uppercase tracking-wide transition-all duration-300 shadow-lg flex items-center justify-center cursor-pointer disabled:opacity-50"
+              className="w-full bg-corporate-red hover:bg-red-700 text-white font-bold py-2.5 px-4 rounded-lg text-center text-xs uppercase tracking-wide transition-all duration-300 shadow-md flex items-center justify-center cursor-pointer disabled:opacity-50"
             >
               {status === "submitting" ? "Transmitting..." : formData.topic}
             </button>

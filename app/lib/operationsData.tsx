@@ -34,7 +34,7 @@ export const operationsData: Operation[] = [
     slug: "specialized-transportation",
     title: "Specialized Heavy-Lift Transportation",
     subtitle: "Precision Haulage, Heavy Equipment Logistics, and Route-Engineered Transport Solutions for Complex Energy Infrastructure.",
-    heroImage: "https://plus.unsplash.com/premium_photo-1661962366644-4b050933581a?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    heroImage: "https://ik.imagekit.io/luvrld8r9/win-toju-photo/WhatsApp%20Image%202026-08-18%20at%208.57.06%20PM.jpeg",
     content: <SpecializedTransportationContent />,
   },
   {
@@ -48,7 +48,7 @@ export const operationsData: Operation[] = [
     slug: "onshore-waste-management",
     title: "Onshore Waste Management",
     subtitle: "Sustainable Waste Characterization, Onsite Containment, Hydrocarbon Remediation, and Municipal & Industrial Stream Compliance Across Onshore Assets.",
-    heroImage: "https://images.unsplash.com/photo-1778610389423-7377b838002f?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    heroImage: "https://ik.imagekit.io/luvrld8r9/win-toju-photo/Onshore%20Waste%20Management.JPG",
     content: <OnshoreWasteManagementContent />,
   },
   {
