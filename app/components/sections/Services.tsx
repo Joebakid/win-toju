@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -12,22 +13,46 @@ export default function Services() {
     {
       number: "01",
       title: "Marine Logistics & Special Transportation",
-      description: "Operating as a registered Shipping Company, we provide Marine Vessels Supply and Operation, alongside Offshore Operation Support Services including Marine Security & Escort, Mooring Services, House Boats, and Barges.",
+      description: "We provide specialized marine logistics and transportation solutions supporting offshore and industrial operations, including marine vessel supply and operations, specialized transportation and related logistical support.",
+      slug: "marine-logistics",
+      bullets: [
+        "Marine vessel supply",
+        "Vessel operations",
+        "Specialized transportation",
+        "Offshore logistical support",
+        "Marine security and escort",
+        "Mooring services",
+        "Houseboats",
+        "Barges"
+      ]
     },
     {
       number: "02",
-      title: "Onshore Waste Management",
-      description: "Certified by the Nigerian Content Development and Monitoring Board (NCDMB) to provide comprehensive onshore waste management services for the oil and gas industry.",
+      title: "Offshore Support",
+      description: "Win-Toju provides marine and offshore support services designed to help clients maintain safe, efficient and reliable operations in demanding marine environments.",
+      slug: "marine-logistics",
+      bullets: []
     },
     {
       number: "03",
-      title: "Claims Agency & General Contracting",
-      description: "Providing professional corporate representation as claims agents and executing comprehensive general contracting services across the sector.",
+      title: "Onshore Waste Management",
+      description: "We provide compliant onshore waste management solutions supporting oil & gas operations and environmental responsibilities. Our operations maintain certified standards for onshore waste management.",
+      slug: "onshore-waste-management",
+      bullets: []
     },
     {
       number: "04",
+      title: "General Contracting & Claims Agency",
+      description: "We provide general contracting and professional claims agency services, supporting clients with project execution, corporate representation and related operational requirements.",
+      slug: "general-contracting",
+      bullets: []
+    },
+    {
+      number: "05",
       title: "Indigenous Labour Supply",
-      description: "Employing and supplying competent and qualified local contractors, Nigerian technical, and management staff. We operate in strict adherence to NUPRC regulations, specifically excluding the supply of expatriate manpower.",
+      description: "We provide competent Nigerian technical, management and local contractor personnel to support project and operational requirements in accordance with applicable regulatory requirements. Our operations specifically exclude the supply of expatriate manpower.",
+      slug: "labour-supply",
+      bullets: []
     },
   ];
 
@@ -59,10 +84,10 @@ export default function Services() {
           y: 0,
           opacity: 1,
           duration: 0.8,
-          stagger: 0.15,
+          stagger: 0.1,
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".services-grid", // Trigger when the grid itself comes into view
+            trigger: ".services-grid",
             start: "top 85%",
           }
         }
@@ -75,38 +100,57 @@ export default function Services() {
   return (
     <section id="services" ref={sectionRef} className="py-24 bg-corporate-navy text-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mb-16 space-y-4">
           <div className="services-header-anim opacity-0 inline-block border-l-4 border-corporate-red pl-4">
             <h2 className="text-corporate-red font-bold tracking-widest uppercase text-sm">
-              Core Divisions
+              What We Do
             </h2>
           </div>
           <h3 className="services-header-anim opacity-0 text-3xl md:text-5xl font-black text-white tracking-tight">
-            Comprehensive Industrial & Logistics Capabilities.
+            Comprehensive Capabilities for Demanding Operations
           </h3>
           <p className="services-header-anim opacity-0 text-slate-300 text-lg leading-relaxed">
-            Engineered to meet the strict operational demands of high-level corporate and government partners across Nigeria's energy and infrastructure sectors.
+            Our core operational divisions are engineered to support complex industrial, energy, and marine requirements across Nigeria.
           </p>
         </div>
 
         {/* Services Grid */}
         <div className="services-grid grid grid-cols-1 md:grid-cols-2 gap-8">
           {servicesList.map((service) => (
-            <div 
-              key={service.number} 
-              className="services-card-anim opacity-0 bg-slate-900/60 border border-slate-800 p-8 rounded-lg relative overflow-hidden group hover:border-corporate-red transition-colors duration-300 space-y-4"
+            <div
+              key={service.number}
+              className="services-card-anim opacity-0 bg-slate-900/60 border border-slate-800 p-8 rounded-2xl relative overflow-hidden space-y-6 flex flex-col justify-between"
             >
-              <div className="text-corporate-red font-black text-4xl">
-                {service.number}
+              <div className="space-y-4">
+                <div className="text-corporate-red font-black text-4xl">
+                  {service.number}
+                </div>
+                <h4 className="text-2xl font-bold text-white">
+                  {service.title}
+                </h4>
+                <p className="text-slate-300 leading-relaxed text-sm">
+                  {service.description}
+                </p>
+
+                {/* Supporting Bullets if available */}
+                {service.bullets && service.bullets.length > 0 && (
+                  <div className="pt-2">
+                    <p className="text-xs font-bold uppercase tracking-wider text-corporate-cream mb-3">
+                      Supporting Services
+                    </p>
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      {service.bullets.map((bullet, idx) => (
+                        <li key={idx} className="flex items-center gap-2 text-xs text-slate-300">
+                          <span className="w-1.5 h-1.5 rounded-full bg-corporate-red"></span>
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
-              <h4 className="text-2xl font-bold text-white group-hover:text-corporate-red transition-colors duration-300">
-                {service.title}
-              </h4>
-              <p className="text-slate-300 leading-relaxed text-sm">
-                {service.description}
-              </p>
             </div>
           ))}
         </div>

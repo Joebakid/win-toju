@@ -1,3 +1,4 @@
+// app/components/sections/Team.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
@@ -6,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { FaLinkedin } from "react-icons/fa";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { teamMembers, getInitials } from "../../lib/teamData"; // Adjust path if necessary
+import { teamMembers, getInitials } from "../../lib/teamData";
 
 export default function Team() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -25,16 +26,16 @@ export default function Team() {
         }
       });
 
-      tl.fromTo(".team-header-anim", 
+      tl.fromTo(".team-header-anim",
         { y: 30, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power3.out" }
       )
-      .fromTo(".team-card-anim", 
+      .fromTo(".team-card-anim",
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
         "-=0.4"
       );
-      
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -45,15 +46,12 @@ export default function Team() {
     const clickedCard = event.currentTarget;
     const allCards = document.querySelectorAll('.team-card-anim');
 
-    // Create an exit sequence
     const exitTl = gsap.timeline({
       onComplete: () => {
-        // Navigate to the individual page after the animation finishes
         router.push(`/team/${slug}`);
       }
     });
 
-    // Fade out other cards
     exitTl.to(allCards, {
       opacity: 0,
       y: 20,
@@ -62,7 +60,6 @@ export default function Team() {
       ease: "power2.in"
     }, 0);
 
-    // Give a slight "pop" to the clicked card before fading
     exitTl.to(clickedCard, {
       scale: 1.05,
       zIndex: 50,
@@ -79,7 +76,7 @@ export default function Team() {
   return (
     <section id="team" ref={sectionRef} className="py-24 bg-corporate-cream border-t border-gray-200 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mx-auto mb-16 text-center space-y-4 flex flex-col items-center">
           <div className="team-header-anim inline-block border-b-4 border-corporate-red pb-2 opacity-0">
@@ -88,18 +85,18 @@ export default function Team() {
             </h2>
           </div>
           <h3 className="team-header-anim text-3xl md:text-5xl font-black text-corporate-navy tracking-tight opacity-0">
-            The Team Behind the Excellence.
+            People Behind the Execution
           </h3>
           <p className="team-header-anim text-corporate-slate text-lg leading-relaxed max-w-2xl opacity-0">
-            Our management framework is driven by certified, highly experienced indigenous professionals dedicated to executing projects safely, efficiently, and to global standards. Click any profile to view full professional experience.
+            Win-Toju is led by a multidisciplinary team of indigenous professionals with responsibilities spanning executive management, finance, operations, project execution, local content and corporate governance. Our leadership approach combines entrepreneurial vision with professional accountability, ensuring that business growth remains aligned with safety, compliance, client requirements and long-term sustainability.
           </p>
         </div>
 
         {/* Team Grid */}
         <div className="team-cards-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
           {teamMembers.map((member, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               onClick={(e) => handleCardClick(member.slug, e)}
               className="team-card-anim opacity-0 bg-white p-8 rounded-lg border-t-4 border-corporate-navy shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col items-center text-center group cursor-pointer relative"
             >
@@ -117,7 +114,7 @@ export default function Team() {
                   getInitials(member.name)
                 )}
               </div>
-              
+
               {/* Member Details */}
               <h4 className="text-xl font-bold text-corporate-navy mb-1 group-hover:text-corporate-red transition-colors">
                 {member.name}
@@ -126,14 +123,9 @@ export default function Team() {
                 {member.role}
               </p>
 
-              {/* <span className="text-xs text-gray-400 mb-4 italic flex items-center gap-2">
-                View Full Profile
-                <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
-              </span> */}
-              
               {/* LinkedIn Social Icon */}
               <div className="mt-auto" onClick={(e) => e.stopPropagation()}>
-                <a 
+                <a
                   href={member.linkedIn}
                   target="_blank"
                   rel="noopener noreferrer"

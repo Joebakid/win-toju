@@ -2,33 +2,32 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { FaBriefcaseMedical, FaRecycle, FaShieldAlt, FaClipboardCheck } from "react-icons/fa";
+import Link from "next/link";
+import { FaShieldAlt, FaClipboardCheck, FaLeaf, FaArrowRight } from "react-icons/fa";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function HSE() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  const policies = [
+  const pillars = [
     {
-      title: "Comprehensive Staff Medical Care",
-      description: "We prioritize personnel health through an active annual medical retainer agreement with Dr. Amadasun Hospitals Ltd. (Westend Hospital & Diagnostic Centre) in Warri, ensuring immediate and continuous healthcare access for our eligible staff.",
-      icon: <FaBriefcaseMedical className="w-10 h-10 text-corporate-red" />,
+      title: "HSE",
+      subtitle: "Health, Safety & Environment",
+      description: "Risk-based operational planning and safety management.",
+      icon: <FaShieldAlt className="w-8 h-8 text-corporate-red" />,
     },
     {
-      title: "Certified Waste Management",
-      description: "As a core component of our environmental protection strategy, Win-Toju is officially certified by the NCDMB (NOGIC JQS) to execute Onshore Waste Management for the oil and gas industry.",
-      icon: <FaRecycle className="w-10 h-10 text-corporate-red" />,
+      title: "QUALITY",
+      subtitle: "Quality Assurance",
+      description: "Structured QA/QC processes and operational controls.",
+      icon: <FaClipboardCheck className="w-8 h-8 text-corporate-red" />,
     },
     {
-      title: "Zero Incident Tolerance",
-      description: "We deploy comprehensive risk management frameworks designed to achieve zero Lost Time Incidents (LTI), operating with strict adherence to environmental safety compliance on all projects.",
-      icon: <FaShieldAlt className="w-10 h-10 text-corporate-red" />,
-    },
-    {
-      title: "QA/QC Frameworks",
-      description: "Multi-tier quality assurance protocols ensuring all procured materials, engineered structures, and marine logistics operations meet unyielding global and regulatory benchmarks.",
-      icon: <FaClipboardCheck className="w-10 h-10 text-corporate-red" />,
+      title: "ENVIRONMENT",
+      subtitle: "Environmental Stewardship",
+      description: "Responsible and compliant environmental practices.",
+      icon: <FaLeaf className="w-8 h-8 text-corporate-red" />,
     },
   ];
 
@@ -53,7 +52,7 @@ export default function HSE() {
         }
       );
 
-      // 2. Animate Policy Cards
+      // 2. Animate Pillars Grid
       gsap.fromTo(".hse-card-anim",
         { y: 40, opacity: 0 },
         {
@@ -78,38 +77,66 @@ export default function HSE() {
       {/* Background Accent */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-slate-900/50 -skew-x-12 translate-x-32 z-0"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12">
-        <div className="max-w-3xl mb-16 space-y-4">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 space-y-16">
+
+        {/* Section Header & Narrative */}
+        <div className="max-w-3xl space-y-4">
           <div className="hse-header-anim opacity-0 inline-block border-l-4 border-corporate-red pl-4">
             <h2 className="text-corporate-red font-bold tracking-widest uppercase text-sm">
-              HSE & Quality Assurance
+              Our Standard
             </h2>
           </div>
           <h3 className="hse-header-anim opacity-0 text-3xl md:text-5xl font-black tracking-tight">
-            Safety & Quality as a Non-Negotiable Standard.
+            Safety and Quality Are Not Negotiable
           </h3>
-          <p className="hse-header-anim opacity-0 text-slate-300 text-lg leading-relaxed">
-            Our Health, Safety, and Environment (HSE) policy is integrated into the core of our operations. We do not compromise on the safety of our personnel, our clients, or the environment.
-          </p>
+          <div className="hse-header-anim opacity-0 space-y-4 text-slate-300 text-base md:text-lg leading-relaxed pt-2">
+            <p>
+              Our commitment to Health, Safety and Environment is embedded in the way we plan, mobilize and execute our operations.
+            </p>
+            <p>
+              We apply structured risk management, quality assurance and operational control measures designed to protect personnel, assets, clients and the environment while maintaining the standards expected within Nigeria's energy and industrial sectors.
+            </p>
+          </div>
         </div>
 
-        <div className="hse-grid grid grid-cols-1 md:grid-cols-2 gap-8">
-          {policies.map((policy, index) => (
-            <div 
-              key={index} 
-              // Added animation classes and opacity-0
-              className="hse-card-anim opacity-0 flex flex-col sm:flex-row gap-4 sm:gap-6 bg-slate-800/40 p-6 sm:p-8 rounded-lg border border-slate-700 hover:border-corporate-red transition-colors duration-300"
+        {/* Three Pillars Grid */}
+        <div className="hse-grid grid grid-cols-1 md:grid-cols-3 gap-8">
+          {pillars.map((pillar, index) => (
+            <div
+              key={index}
+              className="hse-card-anim opacity-0 bg-slate-900/80 border border-slate-800 p-8 rounded-2xl shadow-xl hover:border-corporate-red transition-all duration-300 space-y-4 flex flex-col justify-between group"
             >
-              <div className="flex-shrink-0 sm:mt-1">
-                {policy.icon}
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-2">{policy.title}</h4>
-                <p className="text-slate-300 text-sm leading-relaxed">{policy.description}</p>
+              <div className="space-y-4">
+                <div className="w-14 h-14 rounded-xl bg-corporate-red/10 flex items-center justify-center border border-corporate-red/20 group-hover:scale-110 transition-transform">
+                  {pillar.icon}
+                </div>
+                <div>
+                  <h4 className="text-2xl font-black text-white group-hover:text-corporate-red transition-colors">
+                    {pillar.title}
+                  </h4>
+                  <p className="text-xs font-bold uppercase tracking-wider text-corporate-cream pt-1">
+                    {pillar.subtitle}
+                  </p>
+                </div>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  {pillar.description}
+                </p>
               </div>
             </div>
           ))}
         </div>
+
+        {/* CTA Link */}
+        <div className="hse-header-anim opacity-0 pt-4">
+          <Link
+            href="/hse"
+            className="inline-flex items-center gap-2 text-white font-bold hover:text-corporate-red transition-colors text-sm uppercase tracking-wider group"
+          >
+            <span>Explore HSE & QA/QC</span>
+            <FaArrowRight className="transform group-hover:translate-x-2 transition-transform" />
+          </Link>
+        </div>
+
       </div>
     </section>
   );

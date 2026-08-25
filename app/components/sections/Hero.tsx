@@ -1,29 +1,22 @@
 // app/components/sections/Hero.tsx
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import dynamic from "next/dynamic";
-import { FaEye } from "react-icons/fa";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
-
-// Dynamically import the modal and disable SSR to prevent DOMMatrix errors
-const PDFModal = dynamic(() => import("../ui/PDFModal"), { ssr: false });
+import { FaArrowRight } from "react-icons/fa";
 
 export default function Hero() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
-  
-  // Using the Specialized DPR Permit from the local public folder
-  const activeDoc = "/documents/SPECIALIZED DPR WIN-TOJU.pdf";
 
   // GSAP Animation Effect
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Use fromTo to strictly define the start and end states, preventing flashes
-      gsap.fromTo(".hero-anim", 
-        { 
-          y: 40, 
-          opacity: 0 
+      gsap.fromTo(".hero-anim",
+        {
+          y: 40,
+          opacity: 0
         },
         {
           y: 0,
@@ -39,86 +32,63 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  // Prevent background scrolling when the modal is active
-  useEffect(() => {
-    if (isModalOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isModalOpen]);
-
   return (
     <section ref={heroRef} className="relative w-full min-h-[85vh] bg-corporate-navy flex items-center py-20 lg:py-0 overflow-hidden">
-      
+
       {/* Background Image Layer - Positioned to fill the empty right space */}
       <div className="absolute inset-0 z-0 flex justify-end">
         <div className="w-full lg:w-2/3 h-full relative overflow-hidden">
-          
+
           {/* Gradient Masks to blend the image seamlessly into the navy background */}
           <div className="absolute inset-0 bg-gradient-to-r from-corporate-navy via-corporate-navy/80 to-transparent z-10 block"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-corporate-navy/80 via-transparent to-transparent z-10 lg:hidden"></div>
-          
-          {/* The Image - Updated to Engineering theme, added blur-sm and scale-105 */}
-          <div 
+
+          {/* The Image - Updated to use an authentic photo of field personnel from the local public folder */}
+          <div
             className="w-full h-full bg-cover bg-center bg-no-repeat opacity-40 lg:opacity-60 mix-blend-luminosity blur-sm transform scale-105"
-            style={{ 
-              // High-quality engineering/industrial photo from Unsplash
-              backgroundImage: "url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=2070&q=80')" 
+            style={{
+              backgroundImage: "url('/win-toju-photos/technical man power.JPG')"
             }}
           ></div>
         </div>
       </div>
-      
+
       <div className="relative z-20 max-w-7xl mx-auto px-6 md:px-12 w-full mt-10 lg:mt-0">
         <div className="max-w-3xl space-y-6 md:space-y-8">
-          
+
           <div className="hero-anim opacity-0 inline-block border-l-4 border-corporate-red pl-3 md:pl-4">
             <h2 className="text-corporate-cream font-semibold tracking-widest uppercase text-xs md:text-sm">
-              Marine Logistics & General Contracting
+              Indigenous Capability. Professional Execution.
             </h2>
           </div>
-          
+
           <h1 className="hero-anim opacity-0 text-4xl sm:text-5xl lg:text-7xl font-black text-white leading-tight">
-            Uncompromising Standards in <span className="text-corporate-red block sm:inline">Industrial Execution.</span>
+            Engineering Industrial Possibilities. <span className="text-corporate-red block sm:inline">Delivering with Precision.</span>
           </h1>
-          
+
           <p className="hero-anim opacity-0 text-base sm:text-lg text-slate-300 max-w-2xl leading-relaxed">
-            As a fully certified indigenous enterprise, we deliver expert marine logistics, special transportation, claims agency, and comprehensive labour supply, alongside certified onshore waste management for the Nigerian energy sector.
+            Win-Toju System Enterprise Limited is an indigenous Nigerian industrial services company providing specialized engineering, marine logistics, transportation, contracting, waste management and workforce solutions to the energy, oil & gas and infrastructure sectors.
           </p>
-          
+
           <div className="hero-anim opacity-0 flex flex-col sm:flex-row flex-wrap gap-4 pt-4 md:pt-6">
-            <a 
-              href="#contact" 
-              className="w-full sm:w-auto bg-corporate-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded transition duration-300 shadow-lg text-center"
+            <Link
+              href="/operations"
+              className="w-full sm:w-auto bg-corporate-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded transition duration-300 shadow-lg text-center uppercase tracking-wider text-sm flex justify-center items-center gap-2"
             >
-              Request a Consultation
-            </a>
-            
-            {/* Button that opens the react-pdf Modal */}
-            <button 
-              onClick={() => setIsModalOpen(true)}
-              className="w-full sm:w-auto bg-transparent border-2 border-white hover:bg-white hover:text-corporate-navy text-white font-bold py-4 px-8 rounded transition duration-300 flex items-center justify-center gap-2 cursor-pointer"
+              Explore Our Capabilities
+            </Link>
+
+            <Link
+              href="/team/godwin-ogbaro"
+              className="w-full sm:w-auto bg-transparent border-2 border-white hover:bg-white hover:text-corporate-navy text-white font-bold py-4 px-8 rounded transition duration-300 flex items-center justify-center gap-2 cursor-pointer uppercase tracking-wider text-sm"
             >
-              <FaEye className="w-5 h-5 flex-shrink-0" />
-              View NUPRC Permit
-            </button>
+              Meet Win-Toju
+              <FaArrowRight className="w-4 h-4" />
+            </Link>
           </div>
-          
+
         </div>
       </div>
-
-      {/* Render the modal ONLY on the client when button is clicked */}
-      {isModalOpen && (
-        <PDFModal 
-          activeDoc={activeDoc} 
-          onClose={() => setIsModalOpen(false)} 
-        />
-      )}
     </section>
   );
 }

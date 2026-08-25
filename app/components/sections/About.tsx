@@ -2,30 +2,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FaArrowRight } from "react-icons/fa";
 
 export default function About() {
   const sectionRef = useRef<HTMLElement>(null);
 
-  const contentPolicies = [
-    "Employ and train Nigerian technical and management staff to run daily activities.",
-    "Employ competent and qualified Local Contractors for technical support.",
-    "Form alliances with Nigerian-registered Companies to execute projects.",
-    "Patronize locally manufactured goods that meet industry specified standards.",
-    "Work with international firms that imbibe a culture of non-discrimination."
-  ];
-
-  const operationalScope = [
-    { title: "Marine Logistics", desc: "Specialized transportation, marine vessel supply, and operation." },
-    { title: "Offshore Support", desc: "Marine security, escort, mooring services, house boats, and barges." },
-    { title: "General Contracting", desc: "Comprehensive engineering, claims agency, and labour supply." },
-    { title: "Waste Management", desc: "Certified onshore waste management for the oil & gas industry." },
-  ];
-
   // GSAP ScrollTrigger Animations
   useEffect(() => {
-    // Register ScrollTrigger inside useEffect to prevent SSR errors in Next.js
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
@@ -33,7 +19,7 @@ export default function About() {
       gsap.from(".about-text-anim", {
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%", // Starts when the top of the section reaches 80% down the screen
+          start: "top 80%",
         },
         y: 40,
         opacity: 0,
@@ -42,122 +28,117 @@ export default function About() {
         ease: "power3.out"
       });
 
-      // 2. Animate the operational scope cards
-      gsap.from(".about-card-anim", {
+      // 2. Animate the right facts column
+      gsap.from(".about-facts-anim", {
         scrollTrigger: {
-          trigger: ".cards-container",
+          trigger: ".facts-container",
           start: "top 85%",
         },
         y: 30,
         opacity: 0,
         duration: 0.6,
-        stagger: 0.1,
         ease: "power3.out"
       });
-
-      // 3. Animate the bottom Nigerian Content Policy section
-      gsap.from(".about-bottom-anim", {
-        scrollTrigger: {
-          trigger: ".bottom-container",
-          start: "top 85%",
-        },
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "power3.out"
-      });
-
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
-        
-        {/* TOP SECTION: Corporate Overview & Accreditations */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start mb-24">
+    <section id="about" ref={sectionRef} className="py-24 bg-white relative">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+          {/* Left Column: Corporate Narrative */}
           <div className="space-y-8">
             <div className="about-text-anim inline-block border-l-4 border-corporate-red pl-4">
               <h2 className="text-corporate-red font-bold tracking-widest uppercase text-sm">
-                Corporate Identity
+                Our Identity
               </h2>
             </div>
 
-            <h3 className="about-text-anim text-4xl md:text-5xl font-black text-corporate-navy tracking-tight leading-tight">
-              Driving Industrial Growth Through <span className="text-corporate-red">Uncompromising Standards.</span>
+            <h3 className="about-text-anim text-3xl md:text-5xl font-black text-corporate-navy tracking-tight leading-tight">
+              An Indigenous Company Built for <span className="text-corporate-red">Industrial Execution.</span>
             </h3>
 
-            <div className="space-y-4 text-corporate-slate text-lg leading-relaxed">
+            <div className="space-y-4 text-corporate-slate text-base md:text-lg leading-relaxed">
               <p className="about-text-anim">
-                <strong>WIN-TOJU SYSTEM ENTERPRISE LIMITED (RC: 1744024)</strong> is an indigenous, world-class engineering, marine logistics, and procurement company incorporated on December 10, 2020. Operating from our headquarters at Suite A11, Golden Plaza, Warri, Delta State, we are committed to delivering highly specialized solutions to the energy, oil & gas, and public infrastructure sectors in Nigeria.
+                Win-Toju System Enterprise Limited is an indigenous Nigerian company established to provide dependable technical, logistics and contracting solutions to industries where operational reliability, regulatory compliance and disciplined execution are critical .
               </p>
               <p className="about-text-anim">
-                We maintain the highest levels of statutory and regulatory compliance. Win-Toju is officially licensed by the <strong>Nigerian Upstream Petroleum Regulatory Commission (NUPRC)</strong> for Specialized Transportation and Offshore Support Services, registered with <strong>NIMASA</strong> as a recognized Shipping Company, and certified by the <strong>NCDMB (NOGIC JQS)</strong> as a Service Company. 
+                Incorporated on 10 December 2020, Win-Toju operates from Warri, Delta State, with a strategic focus on supporting Nigeria's energy, oil & gas and infrastructure sectors .
               </p>
-            </div>
-          </div>
-
-          {/* Right Column: Operational Scope Cards */}
-          <div className="relative mt-8 lg:mt-0 cards-container">
-            <div className="absolute inset-0 bg-corporate-navy translate-x-4 translate-y-4 rounded-lg z-0 hidden sm:block"></div>
-            <div className="relative z-10 bg-corporate-cream p-8 md:p-10 rounded-lg border border-gray-200 shadow-xl space-y-6">
-              <h4 className="about-card-anim text-2xl font-bold text-corporate-navy border-b border-gray-300 pb-4">
-                Core Operational Scope
-              </h4>
-              
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {operationalScope.map((scope, index) => (
-                  <div key={index} className="about-card-anim bg-white p-5 border-t-4 border-corporate-red rounded shadow-sm">
-                    <h5 className="font-bold text-corporate-navy text-sm mb-2">{scope.title}</h5>
-                    <p className="text-corporate-slate text-xs leading-relaxed">{scope.desc}</p>
-                  </div>
-                ))}
-              </div>
-              
-              {/* TIN & Tax Compliance callout */}
-              <div className="about-card-anim mt-4 pt-4 border-t border-gray-300 flex items-center justify-between text-xs font-bold text-corporate-slate uppercase tracking-wide">
-                <span>Tax Compliant Enterprise</span>
-                <span>TIN: 23780029-0001</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* BOTTOM SECTION: Nigerian Content Policy */}
-        <div className="bottom-container bg-slate-50 border border-gray-200 rounded-xl p-8 md:p-12 shadow-sm">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
-            
-            <div className="lg:col-span-1 space-y-6">
-              <div className="about-bottom-anim inline-block border-b-4 border-corporate-red pb-2">
-                <h3 className="text-2xl font-black text-corporate-navy uppercase tracking-tight">
-                  Nigerian Content Policy
-                </h3>
-              </div>
-              <p className="about-bottom-anim text-corporate-slate leading-relaxed">
-                As a responsible corporate organization, Win-Toju is committed to maximizing Nigerian Content in the execution of all our projects. Our alliance with foreign technical partners is rooted in the importance of technology and knowledge transfer.
+              <p className="about-text-anim">
+                Our capabilities span marine logistics, offshore support, specialized transportation, onshore waste management, general contracting, claims agency and indigenous labour supply .
               </p>
-              <blockquote className="about-bottom-anim border-l-4 border-corporate-red pl-4 italic text-sm text-corporate-navy font-semibold">
-                "Encouraging Nigerian Contents Development is not only politically sensible but makes good business sense."
-              </blockquote>
+              <p className="about-text-anim">
+                We combine local knowledge, professional expertise, regulatory awareness and strategic partnerships to deliver practical solutions aligned with the requirements of modern industrial operations .
+              </p>
+
+              <p className="about-text-anim">Win-Toju's current corporate information identifies the company as RC 1744024, incorporated in 2020 and headquartered in Warri, Delta State. It also identifies NUPRC, NIMASA and NCDMB/NOGIC JQS credentials.</p>
+
             </div>
 
-            <div className="lg:col-span-2">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {contentPolicies.map((policy, idx) => (
-                  <div key={idx} className="about-bottom-anim flex items-start gap-3 bg-white p-4 rounded shadow-sm border border-gray-100">
-                    <svg className="w-6 h-6 text-corporate-red flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <p className="text-sm text-corporate-slate font-medium leading-relaxed">{policy}</p>
-                  </div>
-                ))}
-              </div>
+            <div className="about-text-anim pt-4">
+              <Link
+                href="/about"
+                className="inline-flex items-center gap-2 bg-corporate-navy hover:bg-slate-800 text-white font-bold py-3.5 px-8 rounded-xl text-xs uppercase tracking-wider transition-all shadow-lg"
+              >
+                <span>Read Our Full Story</span>
+                <FaArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-
           </div>
+
+          {/* Right Column: Company Facts/Statistics */}
+          <div className="relative mt-8 lg:mt-0 facts-container">
+            <div className="absolute inset-0 bg-corporate-navy translate-x-4 translate-y-4 rounded-xl z-0 hidden sm:block"></div>
+            <div className="about-facts-anim relative z-10 bg-corporate-cream p-8 md:p-12 rounded-xl border border-gray-200 shadow-xl">
+
+              <div className="border-b border-gray-300 pb-6 mb-6">
+                <h4 className="text-2xl font-bold text-corporate-navy">
+                  Corporate Facts
+                </h4>
+              </div>
+
+              <ul className="space-y-6">
+                <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-200 pb-4">
+                  <span className="text-corporate-red font-black text-2xl">2020</span>
+                  <span className="text-corporate-slate font-bold uppercase tracking-wider text-sm mt-1 sm:mt-0">Year Established </span>
+                </li>
+
+                <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-200 pb-4">
+                  <span className="text-corporate-navy font-black text-xl">RC 1744024</span>
+                  <span className="text-corporate-slate font-bold uppercase tracking-wider text-sm mt-1 sm:mt-0">Corporate Registration </span>
+                </li>
+
+                <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-200 pb-4">
+                  <span className="text-corporate-navy font-black text-xl">Warri</span>
+                  <span className="text-corporate-slate font-bold uppercase tracking-wider text-sm mt-1 sm:mt-0">Headquarters </span>
+                </li>
+
+                <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-200 pb-4">
+                  <span className="text-corporate-navy font-black text-xl">Nigeria</span>
+                  <span className="text-corporate-slate font-bold uppercase tracking-wider text-sm mt-1 sm:mt-0">Primary Operating Market </span>
+                </li>
+
+                <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center pt-2">
+                  <span className="text-corporate-navy font-black text-xl text-right sm:text-left sm:max-w-[150px] leading-tight">Industrial Services</span>
+                  <span className="text-corporate-slate font-bold uppercase tracking-wider text-sm mt-2 sm:mt-0">Core Business Focus </span>
+                </li>
+              </ul>
+
+              {/* Credentials Note */}
+              <div className="mt-10 pt-6 border-t border-gray-300">
+                 <p className="text-xs font-bold text-corporate-slate uppercase tracking-wide leading-relaxed">
+                   Registered with: NUPRC, NIMASA & NCDMB / NOGIC JQS .
+                 </p>
+              </div>
+
+            </div>
+          </div>
+
         </div>
 
       </div>

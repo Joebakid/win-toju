@@ -4,6 +4,10 @@ import { Inter, Montserrat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "../globals.css";
 
+// Import your Navbar and Footer
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+
 // Body Font: Clean and readable
 const inter = Inter({
   subsets: ["latin"],
@@ -68,8 +72,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
-      <body className="font-sans antialiased text-corporate-slate bg-corporate-cream">
-        {children}
+      <body className="font-sans antialiased text-corporate-slate bg-corporate-cream min-h-screen flex flex-col">
+
+        {/* Navbar will now appear on EVERY page */}
+        <Navbar />
+
+        {/* The main page content grows to fill the middle space */}
+        <main className="flex-grow">
+          {children}
+        </main>
+
+        {/* Footer will now appear on EVERY page */}
+        <Footer />
+
         <Analytics />
       </body>
     </html>

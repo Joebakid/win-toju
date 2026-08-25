@@ -34,7 +34,7 @@ export const operationsData: Operation[] = [
     slug: "specialized-transportation",
     title: "Specialized Heavy-Lift Transportation",
     subtitle: "Precision Haulage, Heavy Equipment Logistics, and Route-Engineered Transport Solutions for Complex Energy Infrastructure.",
-    heroImage: "https://ik.imagekit.io/luvrld8r9/win-toju-photo/WhatsApp%20Image%202026-08-18%20at%208.57.06%20PM.jpeg",
+    heroImage: "https://ik.imagekit.io/luvrld8r9/win-toju-photo/WhatsApp%20Image%202026-08-18%20at%208.57.06%20PM.jpegnpm",
     content: <SpecializedTransportationContent />,
   },
   {
