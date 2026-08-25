@@ -8,7 +8,8 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="bg-slate-950 text-white min-h-screen pt-20">
+    // FIX 1: Removed `min-h-screen` so the parent <main flex-grow> handles the footer placement naturally.
+    <div className="bg-slate-950 text-white w-full pt-20">
 
       {/* 5. HERO SECTION */}
       <section className="relative bg-slate-900 py-20 lg:py-28 px-4 sm:px-6 lg:px-8 border-b border-white/10">
@@ -74,26 +75,27 @@ export default function AboutPage() {
               <h3 className="text-xl font-bold text-white">Corporate Facts</h3>
             </div>
 
+            {/* FIX 2: Applied flex-col for mobile and sm:flex-row for larger screens across all list items */}
             <ul className="space-y-5 relative z-10">
-              <li className="flex justify-between items-center pb-4 border-b border-white/5">
+              <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0 pb-4 border-b border-white/5">
                 <span className="text-slate-400 font-medium">Year Established</span>
-                <span className="font-black text-corporate-cream text-lg">2020</span>
+                <span className="font-black text-corporate-cream text-lg sm:text-right">2020</span>
               </li>
-              <li className="flex justify-between items-center pb-4 border-b border-white/5">
+              <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0 pb-4 border-b border-white/5">
                 <span className="text-slate-400 font-medium">Corporate Registration</span>
-                <span className="font-black text-corporate-cream text-lg">RC 1744024</span>
+                <span className="font-black text-corporate-cream text-lg sm:text-right">RC 1744024</span>
               </li>
-              <li className="flex justify-between items-center pb-4 border-b border-white/5">
+              <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0 pb-4 border-b border-white/5">
                 <span className="text-slate-400 font-medium">Headquarters</span>
-                <span className="font-black text-corporate-cream text-lg text-right">Warri, Delta State</span>
+                <span className="font-black text-corporate-cream text-lg sm:text-right">Warri, Delta State</span>
               </li>
-              <li className="flex justify-between items-center pb-4 border-b border-white/5">
+              <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0 pb-4 border-b border-white/5">
                 <span className="text-slate-400 font-medium">Primary Market</span>
-                <span className="font-black text-corporate-cream text-lg text-right">Nigeria</span>
+                <span className="font-black text-corporate-cream text-lg sm:text-right">Nigeria</span>
               </li>
-              <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center">
+              <li className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 sm:gap-0">
                 <span className="text-slate-400 font-medium mb-1 sm:mb-0">Core Business Focus</span>
-                <span className="font-black text-corporate-cream text-lg text-right">Industrial Services</span>
+                <span className="font-black text-corporate-cream text-lg sm:text-right">Industrial Services</span>
               </li>
             </ul>
           </div>

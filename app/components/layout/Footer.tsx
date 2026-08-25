@@ -1,7 +1,7 @@
-// app/components/layout/Footer.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation"; // 1. Import usePathname
 import Link from "next/link";
 import { 
   FaMapMarkerAlt, 
@@ -16,6 +16,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
+  const pathname = usePathname(); // 2. Track route changes
 
   const officialDocuments = [
     { name: "CAC Certificate", href: "https://drive.google.com/file/d/1kC2HkRGQ02N3T8KVWJwFjisT1pcgE0SJ/preview" },
@@ -33,12 +34,8 @@ export default function Footer() {
     gsap.registerPlugin(ScrollTrigger);
 
     const ctx = gsap.context(() => {
-      // Use fromTo to strictly define the start and end states, preventing flashes
       gsap.fromTo(".footer-anim", 
-        { 
-          y: 30, 
-          opacity: 0 
-        },
+        { y: 30, opacity: 0 },
         {
           y: 0,
           opacity: 1,
@@ -47,14 +44,22 @@ export default function Footer() {
           ease: "power3.out",
           scrollTrigger: {
             trigger: footerRef.current,
-            start: "top 90%", // Triggers when the top of the footer hits 90% of the viewport height
+            start: "top 90%", 
           }
         }
       );
     }, footerRef);
 
-    return () => ctx.revert();
-  }, []);
+    // 3. Force ScrollTrigger to recalculate after DOM paints on the new route
+    const timeout = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
+    return () => {
+      clearTimeout(timeout);
+      ctx.revert();
+    };
+  }, [pathname]); // 4. Add pathname as a dependency to re-run on navigation
 
   return (
     <footer ref={footerRef} className="bg-corporate-navy pt-20 pb-10 border-t-4 border-corporate-red overflow-hidden">
