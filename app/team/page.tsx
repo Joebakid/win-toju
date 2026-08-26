@@ -78,8 +78,8 @@ export default function TeamPage() {
               key={member.slug}
               className="team-card bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
             >
-              {/* Image Container */}
-              <div className="relative w-full h-80 bg-corporate-navy overflow-hidden">
+              {/* Image Container with 4:5 Aspect Ratio to display full portrait height */}
+              <div className="relative w-full aspect-[4/5] bg-corporate-navy overflow-hidden">
                 {member.image ? (
                   <Image
                     src={member.image}

@@ -34,7 +34,7 @@ export default function Page() {
       <NigerianContent/>
 
       <Certifications />
-       <Team />
+       {/* <Team /> */}
        <HSE/>
        <OurFuture/>
        <CorporateValues/>
