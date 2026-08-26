@@ -1,14 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { usePathname } from "next/navigation"; // 1. Import usePathname
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { 
   FaMapMarkerAlt, 
   FaPhoneAlt, 
-  FaEnvelope, 
-  FaFilePdf, 
-  FaExternalLinkAlt 
+  FaEnvelope 
 } from "react-icons/fa";
 import Logo from "../ui/Logo";
 import gsap from "gsap";
@@ -16,18 +14,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Footer() {
   const footerRef = useRef<HTMLElement>(null);
-  const pathname = usePathname(); // 2. Track route changes
-
-  const officialDocuments = [
-    { name: "CAC Certificate", href: "https://drive.google.com/file/d/1kC2HkRGQ02N3T8KVWJwFjisT1pcgE0SJ/preview" },
-    { name: "Tax Clearance (TCC)", href: "https://drive.google.com/file/d/1irixM_NIfXIRtMk74N9DnGUVQeOs5NTQ/preview" },
-    { name: "NUPRC Specialized Permit", href: "https://drive.google.com/file/d/1mw7YiTEVxucd648_UQ8HUXdpFhX-xWdm/preview" },
-    { name: "NIMASA Registration", href: "https://drive.google.com/file/d/1vJ2A-49AhGPLgWkrVtk67gU66Ze-SdjV/preview" },
-    { name: "NCDMB Certificate", href: "https://drive.google.com/file/d/1fxkSGP5O79O5s-HwOieMqcT3bKie_9ic/preview" },
-    { name: "Clinic Retainership", href: "https://drive.google.com/file/d/1Ou0RtFANDBxrC4DSFwUYGjBWDphhbOGq/preview" },
-    { name: "Nigerian Content Policy", href: "https://drive.google.com/file/d/1L5jdCpy186Atu4Kf8Q42NGIzTE_WjF30/preview" },
-    { name: "Personnel Credentials", href: "https://docs.google.com/document/d/1-cU7fGAqinl6Smokt1Hq5VEC1CWIf8Bc/preview" },
-  ];
+  const pathname = usePathname();
 
   // GSAP ScrollTrigger Animation
   useEffect(() => {
@@ -50,7 +37,6 @@ export default function Footer() {
       );
     }, footerRef);
 
-    // 3. Force ScrollTrigger to recalculate after DOM paints on the new route
     const timeout = setTimeout(() => {
       ScrollTrigger.refresh();
     }, 100);
@@ -59,31 +45,13 @@ export default function Footer() {
       clearTimeout(timeout);
       ctx.revert();
     };
-  }, [pathname]); // 4. Add pathname as a dependency to re-run on navigation
+  }, [pathname]);
 
   return (
     <footer ref={footerRef} className="bg-corporate-navy pt-20 pb-10 border-t-4 border-corporate-red overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
-        {/* NEW SECTION 5: FOOTER CALL-TO-ACTION */}
-        {/* <div className="footer-anim opacity-0 bg-slate-900 border border-slate-800 p-8 md:p-12 rounded-2xl mb-16 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8 shadow-xl">
-          <div className="space-y-4 max-w-2xl">
-            <h3 className="text-2xl md:text-3xl font-black text-white">Need Qualified Technical Personnel for Your Upcoming Project?</h3>
-            <p className="text-slate-300 leading-relaxed">
-              Partner with Win-Toju System Enterprise Limited for certified marine and oilfield manpower, compliant workforce logistics, and flawless field execution.
-            </p>
-          </div>
-          <div className="flex-shrink-0">
-            <Link 
-              href="/contact" 
-              className="inline-block bg-corporate-red hover:bg-red-700 text-white font-bold py-4 px-8 rounded-xl text-center text-sm uppercase tracking-wider transition-all duration-300 shadow-lg"
-            >
-              Contact Us Today
-            </Link>
-          </div>
-        </div> */}
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
           
           {/* Column 1: Brand & Contact */}
           <div className="footer-anim opacity-0 space-y-6">
@@ -141,29 +109,6 @@ export default function Footer() {
               <li><Link href="/anti-bribery" className="hover:text-corporate-red transition-colors flex items-center gap-2">Anti-Bribery & Corruption Policy</Link></li>
               <li><Link href="/environmental-safety" className="hover:text-corporate-red transition-colors flex items-center gap-2">Environmental Safety Policy</Link></li>
               <li><Link href="/local-content" className="hover:text-corporate-red transition-colors flex items-center gap-2">Local Content Directive</Link></li>
-            </ul>
-          </div>
-
-          {/* Column 4: Official Documents */}
-          <div className="footer-anim opacity-0">
-            <h4 className="text-white font-bold uppercase tracking-widest text-sm mb-6 border-b border-slate-700 pb-2">
-              Official Documents
-            </h4>
-            <ul className="space-y-3 text-sm text-slate-400">
-              {officialDocuments.map((doc, index) => (
-                <li key={index}>
-                  <a 
-                    href={doc.href} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hover:text-corporate-red transition-colors flex items-center gap-2 group"
-                  >
-                    <FaFilePdf className="text-slate-500 group-hover:text-corporate-red transition-colors" />
-                    <span className="truncate">{doc.name}</span>
-                    <FaExternalLinkAlt className="w-2.5 h-2.5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </a>
-                </li>
-              ))}
             </ul>
           </div>
 

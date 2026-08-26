@@ -5,7 +5,7 @@ import Footer from "../components/layout/Footer";
 export default function EnvironmentalSafetyPage() {
   return (
     <main className="min-h-screen bg-corporate-cream flex flex-col font-sans">
-      <Navbar />
+      {/* <Navbar /> */}
       
       <div className="flex-grow py-20 px-6 md:px-12">
         <div className="max-w-4xl mx-auto bg-white p-8 md:p-16 rounded-xl shadow-sm border border-gray-100">
@@ -35,7 +35,7 @@ export default function EnvironmentalSafetyPage() {
         </div>
       </div>
 
-      <Footer />
+      {/* <Footer /> */}
     </main>
   );
 }
