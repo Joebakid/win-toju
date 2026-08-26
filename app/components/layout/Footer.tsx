@@ -66,7 +66,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         
         {/* NEW SECTION 5: FOOTER CALL-TO-ACTION */}
-        <div className="footer-anim opacity-0 bg-slate-900 border border-slate-800 p-8 md:p-12 rounded-2xl mb-16 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8 shadow-xl">
+        {/* <div className="footer-anim opacity-0 bg-slate-900 border border-slate-800 p-8 md:p-12 rounded-2xl mb-16 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-8 shadow-xl">
           <div className="space-y-4 max-w-2xl">
             <h3 className="text-2xl md:text-3xl font-black text-white">Need Qualified Technical Personnel for Your Upcoming Project?</h3>
             <p className="text-slate-300 leading-relaxed">
@@ -81,7 +81,7 @@ export default function Footer() {
               Contact Us Today
             </Link>
           </div>
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
