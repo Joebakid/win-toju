@@ -33,7 +33,7 @@ export default function Page() {
       <HowWeWork/>
       <NigerianContent/>
 
-      <Certifications />
+      {/* <Certifications /> */}
        {/* <Team /> */}
        <HSE/>
        <OurFuture/>
