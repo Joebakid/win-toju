@@ -15,6 +15,9 @@ import NigerianContent from "./components/sections/NigerianContent";
 import HSE from "./components/sections/HSE";
 import OurFuture from "./components/sections/OurFuture";
 // import PageLoader from "./components/ui/PageLoader";
+import CorporateValues from "./components/sections/CorporateValues";
+import ClosingStatement from "./components/sections/ClosingStatement";
+import CallToAction from "./components/sections/CallToAction";
 
 export default function Page() {
   return (
@@ -34,6 +37,9 @@ export default function Page() {
        <Team />
        <HSE/>
        <OurFuture/>
+       <CorporateValues/>
+       <ClosingStatement />
+       <CallToAction/>
        {/* <Projects /> */}
       {/* <Certifications /> */}
       {/* <Footer /> */}

@@ -1,24 +1,21 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "../globals.css";
 
-// Import your Navbar and Footer
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
+import ScrollToTop from "./components/ui/ScrollToTop";
 
-// Body Font: Clean and readable
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
   display: "swap",
 });
 
-// Heading Font: Wide, geometric, and industrial (Updated with weights for maximum pop)
 const montserrat = Montserrat({
   subsets: ["latin"],
-  weight: ["400", "500", "700", "800", "900"], // 900 is required for 'font-black' to work
+  weight: ["400", "500", "700", "800", "900"],
   variable: "--font-montserrat",
   display: "swap",
 });
@@ -71,19 +68,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${montserrat.variable} scroll-smooth`}>
+    <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <body className="font-sans antialiased text-corporate-slate bg-corporate-cream min-h-screen flex flex-col">
 
-        {/* Navbar will now appear on EVERY page */}
+        {/* Navbar */}
         <Navbar />
 
-        {/* The main page content grows to fill the middle space */}
+        {/* Main page content */}
         <main className="flex-grow">
           {children}
         </main>
 
-        {/* Footer will now appear on EVERY page */}
+        {/* Footer */}
         <Footer />
+
+        {/* Global Scroll-to-top component */}
+        <ScrollToTop />
 
         <Analytics />
       </body>

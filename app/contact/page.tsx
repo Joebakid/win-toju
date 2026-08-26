@@ -115,7 +115,7 @@ export default function ContactPage() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <main ref={pageRef} className="min-h-screen bg-white py-16 md:py-24">
         <div className="max-w-7xl mx-auto px-6 md:px-12">
           
@@ -348,7 +348,7 @@ export default function ContactPage() {
           </div>
         </div>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }
