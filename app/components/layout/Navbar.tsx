@@ -1,4 +1,3 @@
-// app/components/layout/Navbar.tsx
 "use client";
 
 import { useState, useEffect, useRef } from "react";
@@ -12,9 +11,20 @@ interface NavbarProps {
 
 export default function Navbar({ transparent = false }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isAboutOpen, setIsAboutOpen] = useState(false);
+  const [isMobileAboutOpen, setIsMobileAboutOpen] = useState(false);
   const [isOperationsOpen, setIsOperationsOpen] = useState(false);
   const [isMobileOpsOpen, setIsMobileOpsOpen] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
+
+  const aboutLinks = [
+    { name: "Who We Are", href: "/about/who-we-are" },
+    { name: "Our Leadership", href: "/about/our-leadership" },
+    { name: "Nigerian Content", href: "/about/nigerian-content" },
+    { name: "HSE, Quality & Environment", href: "/about/hse-quality-environment" },
+    { name: "Certifications & Compliance", href: "/about/certifications-compliance" },
+    { name: "Careers", href: "/careers" },
+  ];
 
   const operationsLinks = [
     { name: "Technical Manpower & Labour Supply", href: "/operations/labour-supply" },
@@ -65,6 +75,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
             className="nav-anim opacity-0 w-32 md:w-40 flex-shrink-0 flex items-center" 
             onClick={() => {
               setIsMobileMenuOpen(false);
+              setIsAboutOpen(false);
               setIsOperationsOpen(false);
             }}
           >
@@ -79,10 +90,36 @@ export default function Navbar({ transparent = false }: NavbarProps) {
               Home
             </Link>
 
-            <Link href="/#about" className={`nav-anim opacity-0 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide ${topLinkClasses}`}>
-              About
-            </Link>
+            {/* About Dropdown */}
+            <div 
+              className="relative nav-anim opacity-0"
+              onMouseEnter={() => setIsAboutOpen(true)}
+              onMouseLeave={() => setIsAboutOpen(false)}
+            >
+              <button className={`flex items-center gap-1.5 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide py-2 focus:outline-none ${topLinkClasses}`}>
+                About Us
+                <svg className={`w-3.5 h-3.5 transition-transform duration-200 ${isAboutOpen ? "rotate-180 text-corporate-red" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
 
+              {isAboutOpen && (
+                <div className="absolute left-0 mt-0 w-72 bg-white rounded-lg shadow-xl border border-gray-100 py-3 z-50">
+                  {aboutLinks.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => setIsAboutOpen(false)}
+                      className="block px-5 py-2.5 text-xs xl:text-sm font-medium text-corporate-slate hover:bg-slate-50 hover:text-corporate-red transition-colors"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Operations Dropdown */}
             <div 
               className="relative nav-anim opacity-0"
               onMouseEnter={() => setIsOperationsOpen(true)}
@@ -116,6 +153,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
             </Link>
           </nav>
 
+          {/* Mobile Hamburger Button */}
           <div className="nav-anim opacity-0 lg:hidden flex items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -133,6 +171,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
         </div>
       </div>
 
+      {/* Mobile Drawer */}
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
           <div className="px-6 pt-4 pb-6 space-y-4">
@@ -141,10 +180,38 @@ export default function Navbar({ transparent = false }: NavbarProps) {
               Home
             </Link>
 
-            <Link href="/#about" onClick={() => setIsMobileMenuOpen(false)} className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide">
-              About
-            </Link>
+            {/* Mobile About Accordion */}
+            <div>
+              <button
+                onClick={() => setIsMobileAboutOpen(!isMobileAboutOpen)}
+                className="flex items-center justify-between w-full text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide py-1"
+              >
+                <span>About Us</span>
+                <svg className={`w-4 h-4 transition-transform duration-200 ${isMobileAboutOpen ? "rotate-180 text-corporate-red" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
 
+              {isMobileAboutOpen && (
+                <div className="pl-4 mt-2 space-y-2 border-l-2 border-corporate-red">
+                  {aboutLinks.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      onClick={() => {
+                        setIsMobileMenuOpen(false);
+                        setIsMobileAboutOpen(false);
+                      }}
+                      className="block text-sm font-medium text-gray-600 hover:text-corporate-red py-1"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Mobile Operations Accordion */}
             <div>
               <button
                 onClick={() => setIsMobileOpsOpen(!isMobileOpsOpen)}

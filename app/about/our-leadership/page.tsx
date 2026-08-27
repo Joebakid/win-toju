@@ -6,7 +6,7 @@ import Link from "next/link";
 import { FaLinkedin, FaArrowRight } from "react-icons/fa";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { teamMembers, getInitials } from "../lib/teamData";
+import { teamMembers, getInitials } from "../../lib/teamData";
 
 export default function TeamPage() {
   const pageRef = useRef<HTMLDivElement>(null);
@@ -78,7 +78,7 @@ export default function TeamPage() {
               key={member.slug}
               className="team-card bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 flex flex-col transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl group"
             >
-              {/* Image Container with 4:5 Aspect Ratio to display full portrait height */}
+              {/* Image Container */}
               <div className="relative w-full aspect-[4/5] bg-corporate-navy overflow-hidden">
                 {member.image ? (
                   <Image

@@ -80,7 +80,8 @@ export default function TeamMemberProfile({ params }: ProfileProps) {
           <div className="hero-anim bg-black/50 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 text-gray-200 text-xs sm:text-sm font-semibold mb-6 flex items-center gap-2 tracking-wide shadow-lg">
             <Link href="/" className="hover:text-white transition-colors">Home</Link>
             <span>/</span>
-            <Link href="/team" className="hover:text-white transition-colors">Team</Link>
+            {/* ADDED LEADING SLASH HERE */}
+            <Link href="/about/our-leadership" className="hover:text-white transition-colors">Our Leadership</Link>
             <span>/</span>
             <span className="text-[#38bdf8] font-bold">{member.name}</span>
           </div>
@@ -116,26 +117,15 @@ export default function TeamMemberProfile({ params }: ProfileProps) {
       <section className="content-anim max-w-4xl mx-auto px-4 sm:px-6 md:px-12 -mt-12 md:-mt-16 relative z-20">
         <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8 md:p-12 border-t-8 border-corporate-red">
 
-          {/* Top Bar inside Bio Card: Back to Team & Secondary LinkedIn Link */}
+          {/* Top Bar inside Bio Card: Back to Team */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-8 border-b border-gray-100 pb-6">
+            {/* UPDATED HREF HERE AS WELL */}
             <Link
-              href="/team"
+              href="/about/our-leadership"
               className="inline-flex items-center gap-2 text-corporate-slate hover:text-corporate-red font-bold transition-colors text-xs sm:text-sm uppercase tracking-wider"
             >
               <FaArrowLeft /> Back to Our Team
             </Link>
-
-            {member.linkedIn && member.linkedIn !== "#" && (
-              <a
-                href={member.linkedIn}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-[#0077b5] hover:text-[#005885] font-bold text-xs sm:text-sm transition-colors"
-              >
-                <FaLinkedin className="text-lg" />
-                <span>LinkedIn Profile</span>
-              </a>
-            )}
           </div>
 
           <div className="prose prose-lg max-w-none">
