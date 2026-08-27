@@ -31,11 +31,11 @@ export default function Page() {
 
       <Services />
       <HowWeWork/>
-      <NigerianContent/>
+      {/* <NigerianContent/> */}
 
       {/* <Certifications /> */}
        {/* <Team /> */}
-       <HSE/>
+       {/* <HSE/> */}
        <OurFuture/>
        <CorporateValues/>
        <ClosingStatement />
