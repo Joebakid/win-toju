@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, ChangeEvent, FormEvent } from "react";
+import { useEffect, useRef, useState, ChangeEvent, FormEvent, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import {
@@ -32,7 +32,7 @@ interface Vacancy {
   requirements: string[];
 }
 
-export default function CareersPage() {
+function CareersContent() {
   const pageRef = useRef<HTMLElement>(null);
   const cvFormRef = useRef<HTMLDivElement>(null);
   const searchParams = useSearchParams();
@@ -228,12 +228,6 @@ export default function CareersPage() {
             >
               Explore Opportunities <FaArrowDown />
             </a>
-            {/* <button
-              onClick={() => scrollToCvForm()}
-              className="bg-slate-100 text-corporate-navy px-6 py-3.5 rounded-xl font-bold hover:bg-slate-200 transition-colors inline-flex items-center gap-2 text-xs uppercase tracking-wider"
-            >
-              Submit Your Profile <FaArrowRight />
-            </button> */}
           </div>
         </section>
 
@@ -318,59 +312,6 @@ export default function CareersPage() {
             </div>
           </div>
         </section>
-
-        {/* VACANCIES / NO-VACANCY STATE */}
-        {/* <section id="vacancies" className="space-y-8 border-t border-slate-200 pt-16">
-          <div className="comp-anim space-y-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-corporate-red">Recruitment Status</span>
-            <h2 className="text-3xl md:text-4xl font-black text-corporate-navy">Current Vacancies</h2>
-          </div>
-
-          {vacancies.length === 0 ? (
-            <div className="comp-anim bg-slate-50 p-8 md:p-12 rounded-2xl border border-slate-200 space-y-6 max-w-3xl">
-              <div className="flex items-center gap-3 text-slate-500">
-                <FaCircleInfo className="w-5 h-5 text-slate-400 shrink-0" />
-                <p className="text-slate-700 text-sm md:text-base font-semibold">
-                  There are currently no open positions at Win-Toju.
-                </p>
-              </div>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                We welcome expressions of interest from qualified professionals who would like to be considered for future opportunities.
-              </p>
-              <button
-                onClick={() => scrollToCvForm()}
-                className="bg-corporate-red text-white px-6 py-3 rounded-xl font-bold hover:bg-red-700 transition-colors inline-flex items-center gap-2 text-xs uppercase tracking-wider shadow-sm"
-              >
-                Submit Your CV / Express Interest <FaArrowRight />
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {vacancies.map((vacancy) => (
-                <div key={vacancy.id} className="comp-anim bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
-                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 pb-4">
-                    <div>
-                      <span className="text-[10px] font-bold text-corporate-red uppercase tracking-wider">{vacancy.department}</span>
-                      <h3 className="text-xl font-black text-corporate-navy">{vacancy.title}</h3>
-                    </div>
-                    <div className="text-xs text-slate-500 text-right space-y-1">
-                      <div>Location: <span className="font-bold text-slate-700">{vacancy.location}</span></div>
-                      <div>Type: <span className="font-bold text-slate-700">{vacancy.employmentType}</span></div>
-                      <div>Closing: <span className="font-bold text-slate-700">{vacancy.closingDate}</span></div>
-                    </div>
-                  </div>
-                  <p className="text-slate-600 text-xs md:text-sm">{vacancy.description}</p>
-                  <button
-                    onClick={() => scrollToCvForm(vacancy.title)}
-                    className="bg-corporate-navy text-white px-5 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider hover:bg-slate-800 transition-colors inline-flex items-center gap-2"
-                  >
-                    Apply For Position <FaArrowRight />
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-        </section> */}
 
         {/* WEB3FORMS INTEGRATED SUBMISSION FORM */}
         <section ref={cvFormRef} className="space-y-8 bg-slate-50 p-8 md:p-12 rounded-2xl border border-slate-200">
@@ -621,5 +562,20 @@ export default function CareersPage() {
 
       </div>
     </main>
+  );
+}
+
+// 2. Wrap the component with Suspense in the default export
+export default function CareersPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-[100dvh] flex flex-col items-center justify-center bg-white">
+        <div className="text-corporate-navy font-bold text-sm uppercase tracking-widest animate-pulse">
+          Loading Careers...
+        </div>
+      </div>
+    }>
+      <CareersContent />
+    </Suspense>
   );
 }
