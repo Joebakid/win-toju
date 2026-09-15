@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import Logo from "../ui/Logo"; 
+import Logo from "../ui/Logo";
 import gsap from "gsap";
 
 interface NavbarProps {
@@ -23,7 +23,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
     { name: "Nigerian Content", href: "/about/nigerian-content" },
     { name: "HSE, Quality & Environment", href: "/about/hse-quality-environment" },
     { name: "Certifications & Compliance", href: "/about/certifications-compliance" },
-    { name: "Careers", href: "/careers" },
+    { name: "Careers", href: "/about/careers" },
   ];
 
   const operationsLinks = [
@@ -53,14 +53,14 @@ export default function Navbar({ transparent = false }: NavbarProps) {
     return () => ctx.revert();
   }, []);
 
-  const headerClasses = transparent 
-    ? "absolute top-0 w-full z-50 bg-transparent" 
+  const headerClasses = transparent
+    ? "absolute top-0 w-full z-50 bg-transparent"
     : "sticky top-0 w-full z-50 bg-white shadow-sm border-b border-gray-100";
-    
+
   const topLinkClasses = transparent
     ? "text-white hover:text-gray-200"
     : "text-corporate-slate hover:text-corporate-red";
-    
+
   const hamburgerClasses = transparent
     ? "text-white hover:text-gray-200"
     : "text-corporate-navy hover:text-corporate-red";
@@ -69,10 +69,10 @@ export default function Navbar({ transparent = false }: NavbarProps) {
     <header ref={headerRef} className={headerClasses}>
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="flex justify-between items-center h-20">
-          
-          <Link 
-            href="/" 
-            className="nav-anim opacity-0 w-32 md:w-40 flex-shrink-0 flex items-center" 
+
+          <Link
+            href="/"
+            className="nav-anim opacity-0 w-32 md:w-40 flex-shrink-0 flex items-center"
             onClick={() => {
               setIsMobileMenuOpen(false);
               setIsAboutOpen(false);
@@ -85,13 +85,13 @@ export default function Navbar({ transparent = false }: NavbarProps) {
           </Link>
 
           <nav className="hidden lg:flex space-x-4 xl:space-x-8 items-center">
-            
+
             <Link href="/" className={`nav-anim opacity-0 font-semibold transition-colors text-xs xl:text-sm uppercase tracking-wide ${topLinkClasses}`}>
               Home
             </Link>
 
             {/* About Dropdown */}
-            <div 
+            <div
               className="relative nav-anim opacity-0"
               onMouseEnter={() => setIsAboutOpen(true)}
               onMouseLeave={() => setIsAboutOpen(false)}
@@ -120,7 +120,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
             </div>
 
             {/* Operations Dropdown */}
-            <div 
+            <div
               className="relative nav-anim opacity-0"
               onMouseEnter={() => setIsOperationsOpen(true)}
               onMouseLeave={() => setIsOperationsOpen(false)}
@@ -175,7 +175,7 @@ export default function Navbar({ transparent = false }: NavbarProps) {
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-100 absolute w-full shadow-lg">
           <div className="px-6 pt-4 pb-6 space-y-4">
-            
+
             <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="block text-corporate-slate hover:text-corporate-red font-semibold text-base uppercase tracking-wide">
               Home
             </Link>

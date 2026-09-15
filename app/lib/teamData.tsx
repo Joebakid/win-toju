@@ -1,4 +1,3 @@
-// app/lib/teamData.tsx
 import React from "react";
 
 export interface TeamMember {
@@ -11,10 +10,10 @@ export interface TeamMember {
 }
 
 export const teamMembers: TeamMember[] = [
-  { 
+  {
     slug: "godwin-ogbaro",
-    name: "Deacon Godwin Toju Ogbaro", 
-    role: "Chief Executive Officer", 
+    name: "Deacon Godwin Toju Ogbaro",
+    role: "Chief Executive Officer",
     linkedIn: "https://www.linkedin.com/in/godwin-ogbaro-845a29a0/",
     image: "/win-toju-photos/1.jpeg",
     fullProfile: (
@@ -59,11 +58,11 @@ export const teamMembers: TeamMember[] = [
       </div>
     )
   },
-  { 
+  {
     slug: "ogbaro-tosan-francis",
-    name: "Mr. Ogbaro Tosan Francis", 
-    role: "Financial Director", 
-     image: "/win-toju-photos/francis.jpeg",
+    name: "Mr. Ogbaro Tosan Francis",
+    role: "Financial Director",
+    image: "/win-toju-photos/francis.jpeg",
     linkedIn: "#",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
@@ -101,12 +100,12 @@ export const teamMembers: TeamMember[] = [
       </div>
     )
   },
-  { 
+  {
     slug: "betty-ogbaro-owubetime",
-    name: "Mrs. Betty Ogbaro Owubetime", 
-    role: "General Manager", 
+    name: "Mrs. Betty Ogbaro Owubetime",
+    role: "General Manager",
     linkedIn: "#",
-     image: "/win-toju-photos/betty.jpeg",
+    image: "/win-toju-photos/betty.jpeg",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
         <h2 className="text-2xl md:text-3xl font-black text-corporate-navy mb-4 leading-tight">
@@ -142,10 +141,10 @@ export const teamMembers: TeamMember[] = [
       </div>
     )
   },
-  { 
+  {
     slug: "mogbusiaghan-dave-oyibote",
-    name: "Mr. Mogbusiaghan Dave Oyibote", 
-    role: "Project & Local Content Manager", 
+    name: "Mr. Mogbusiaghan Dave Oyibote",
+    role: "Project & Local Content Manager",
     linkedIn: "#",
     image: "/win-toju-photos/Dave.png",
     fullProfile: (
@@ -180,10 +179,10 @@ export const teamMembers: TeamMember[] = [
       </div>
     )
   },
-  { 
+  {
     slug: "oki-samuel",
-    name: "Oki Samuel", 
-    role: "Company Secretary", 
+    name: "Oki Samuel",
+    role: "Company Secretary",
     linkedIn: "https://www.linkedin.com/in/okizaweb3pro/",
     image: "/win-toju-photos/sammy.PNG",
     fullProfile: (
