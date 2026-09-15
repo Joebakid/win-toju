@@ -6,6 +6,7 @@ export interface TeamMember {
   role: string;
   linkedIn: string;
   image?: string;
+  summary?: string; // <-- Added to fix the TypeScript build error
   fullProfile: React.ReactNode;
 }
 
@@ -16,6 +17,7 @@ export const teamMembers: TeamMember[] = [
     role: "Chief Executive Officer",
     linkedIn: "https://www.linkedin.com/in/godwin-ogbaro-845a29a0/",
     image: "/win-toju-photos/1.jpeg",
+    summary: "Provides executive leadership and strategic direction with over 30 years of field experience in marine logistics and offshore asset management.",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
         <h2 className="text-2xl md:text-3xl font-black text-corporate-navy mb-4 leading-tight">
@@ -64,6 +66,7 @@ export const teamMembers: TeamMember[] = [
     role: "Financial Director",
     image: "/win-toju-photos/francis.jpeg",
     linkedIn: "#",
+    summary: "Drives sustainable growth and operational resilience through rigorous financial governance and strategic resource management.",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
         <h2 className="text-2xl md:text-3xl font-black text-corporate-navy mb-4 leading-tight">
@@ -106,6 +109,7 @@ export const teamMembers: TeamMember[] = [
     role: "General Manager",
     linkedIn: "#",
     image: "/win-toju-photos/betty.jpeg",
+    summary: "Oversees administrative workflows, regulatory compliance, and corporate governance to ensure seamless onshore and offshore operations.",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
         <h2 className="text-2xl md:text-3xl font-black text-corporate-navy mb-4 leading-tight">
@@ -147,6 +151,7 @@ export const teamMembers: TeamMember[] = [
     role: "Project & Local Content Manager",
     linkedIn: "#",
     image: "/win-toju-photos/Dave.png",
+    summary: "Leads project execution and local content strategy, bridging technical precision with strict Nigerian energy regulations.",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
         <h2 className="text-2xl md:text-3xl font-black text-corporate-navy mb-4 leading-tight">
@@ -185,6 +190,7 @@ export const teamMembers: TeamMember[] = [
     role: "Company Secretary",
     linkedIn: "https://www.linkedin.com/in/okizaweb3pro/",
     image: "/win-toju-photos/sammy.PNG",
+    summary: "Directs corporate governance, tender documentation, and environmental sustainability initiatives across the enterprise.",
     fullProfile: (
       <div className="space-y-6 text-corporate-slate text-lg leading-relaxed">
         <h2 className="text-2xl md:text-3xl font-black text-corporate-navy mb-4 leading-tight">

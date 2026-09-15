@@ -93,13 +93,13 @@ export default function LeadershipPage() {
 
         {/* HERO SECTION */}
         <section className="max-w-4xl space-y-6">
-          <div className="hero-anim inline-flex items-center gap-2 text-xs font-semibold text-slate-500">
+          {/* <div className="hero-anim inline-flex items-center gap-2 text-xs font-semibold text-slate-500">
             <Link href="/" className="hover:text-corporate-navy transition-colors">Home</Link>
             <FaChevronRight className="w-2.5 h-2.5 text-slate-400" />
             <span className="text-slate-500">About</span>
             <FaChevronRight className="w-2.5 h-2.5 text-slate-400" />
             <span className="text-corporate-red font-bold">Our Leadership</span>
-          </div>
+          </div> */}
 
           <div className="hero-anim border-l-4 border-corporate-red pl-4">
             <span className="text-corporate-red font-bold tracking-widest uppercase text-xs md:text-sm">
